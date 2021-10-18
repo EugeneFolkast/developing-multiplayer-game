@@ -1,0 +1,49 @@
+package com.mygdx.game.model;
+
+import com.badlogic.gdx.graphics.Color;
+import com.mygdx.game.controls.Controls;
+
+import java.util.Optional;
+import java.util.UUID;
+
+public class Player implements Identifiable {
+    private final UUID id;
+    private final Controls controls;
+    private final Color color;
+    private Optional<Tank> tank;
+
+    public Player(UUID id, Controls controls, Color color) {
+        this.id = id;
+        this.controls = controls;
+        this.color = color;
+        this.tank = Optional.empty();
+    }
+
+    public void setShip(Tank ship) {
+        this.tank = Optional.ofNullable(ship);
+    }
+
+    public void noticeHit() {
+        this.tank = Optional.empty();
+    }
+
+    public void update(float delta) {
+        tank.ifPresent(tank -> {
+            tank.control(controls, delta);
+            tank.update(delta);
+        });
+    }
+
+    @Override
+    public UUID getId() {
+        return id;
+    }
+
+    public Optional<Tank> getShip() {
+        return tank;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+}
