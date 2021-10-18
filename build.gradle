@@ -46,7 +46,19 @@ project(":desktop") {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        
+
+    }
+}
+
+project(":server") {
+    apply plugin: "java"
+
+
+    dependencies {
+        compile project(":core")
+        compile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        compile 'com.corundumstudio.socketio:netty-socketio:1.7.12'
     }
 }
 
@@ -56,6 +68,7 @@ project(":core") {
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
-        
+        compile "com.fasterxml.jackson.core:jackson-databind:2.8.4"
+        compile "org.slf4j:slf4j-simple:1.7.25"
     }
 }
