@@ -23,9 +23,9 @@ public class PlayerRenderer implements Renderer {
 
     @Override
     public void render(ShapeRenderer shapeRenderer) {
-        player.getShip().ifPresent(ship ->
+        player.getShip().ifPresent(tank ->
                 cache
-                        .computeIfAbsent(ship, VisibleRenderer::new)
+                        .computeIfAbsent(tank, VisibleRenderer::new)
                         .render(shapeRenderer));
     }
 }
