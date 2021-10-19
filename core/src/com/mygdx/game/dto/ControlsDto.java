@@ -12,17 +12,20 @@ public class ControlsDto implements Dto {
     private final boolean left;
     private final boolean right;
     private final boolean shoot;
+    private final boolean back;
 
     @JsonCreator
     public ControlsDto(
             @JsonProperty("forward") boolean forward,
             @JsonProperty("left") boolean left,
             @JsonProperty("right") boolean right,
-            @JsonProperty("shoot") boolean shoot) {
+            @JsonProperty("shoot") boolean shoot,
+            @JsonProperty("back") boolean back) {
         this.forward = forward;
         this.left = left;
         this.right = right;
         this.shoot = shoot;
+        this.back = back;
     }
 
     public boolean getForward() {
