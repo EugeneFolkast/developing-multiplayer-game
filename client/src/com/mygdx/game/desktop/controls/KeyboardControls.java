@@ -1,6 +1,7 @@
-package com.mygdx.game.controls;
+package com.mygdx.game.desktop.controls;
 
 import com.badlogic.gdx.Gdx;
+import com.mygdx.game.controls.Controls;
 
 import static com.badlogic.gdx.Input.Keys.*;
 

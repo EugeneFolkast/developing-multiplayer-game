@@ -1,4 +1,4 @@
-package com.mygdx.game.rendering;
+package com.mygdx.game.desktop.rendering;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.model.Player;

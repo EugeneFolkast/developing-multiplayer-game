@@ -5,12 +5,16 @@ import com.mygdx.game.controls.Controls;
 
 import java.util.Optional;
 import java.util.UUID;
+import com.badlogic.gdx.graphics.Color;
 
+import java.util.*;
 public class Player implements Identifiable {
     private final UUID id;
     private final Controls controls;
     private final Color color;
     private Optional<Tank> tank;
+    public static final List<Color> POSSIBLE_COLORS = Collections.unmodifiableList(Arrays.asList(
+            Color.WHITE, Color.GRAY, Color.BLUE, Color.GREEN, Color.ORANGE, Color.LIGHT_GRAY));
 
     public Player(UUID id, Controls controls, Color color) {
         this.id = id;
