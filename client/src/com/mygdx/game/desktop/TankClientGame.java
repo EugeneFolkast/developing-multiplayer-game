@@ -40,8 +40,8 @@ public class TankClientGame extends Game {
 
         Map<String, String> env = System.getenv();
         String protocol = env.getOrDefault("PROTOCOL", "http");
-        String host = env.getOrDefault("HOST", "172.22.1.254");
-        int port = Integer.parseInt(env.getOrDefault("PORT", "8080"));
+        String host = env.getOrDefault("HOST", "91.238.231.85");
+        int port = Integer.parseInt(env.getOrDefault("PORT", "8888"));
         Client client = new SocketIoClient(protocol, host, port);
 
         asteroids = new TankClientScreen(

@@ -36,6 +36,10 @@ public class RemoteControls implements Controls {
         forward = state;
     }
 
+    public void setBack(boolean state) {
+        back = state;
+    }
+
     public void setLeft(boolean state) {
         left = state;
     }
