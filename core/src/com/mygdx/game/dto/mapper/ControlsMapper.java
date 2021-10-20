@@ -9,6 +9,7 @@ public class ControlsMapper {
         controls.setForward(dto.getForward());
         controls.setLeft(dto.getLeft());
         controls.setRight(dto.getRight());
+        controls.setBack(dto.getBack());
         controls.setShoot(dto.getShoot());
     }
 

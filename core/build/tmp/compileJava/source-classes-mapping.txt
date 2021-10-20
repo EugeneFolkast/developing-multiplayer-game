@@ -2,10 +2,10 @@ com/mygdx/game/controls/Controls.java
  com.mygdx.game.controls.Controls
 com/mygdx/game/manager/Respawner.java
  com.mygdx.game.manager.Respawner
-com/mygdx/game/model/RemotePlayer.java
- com.mygdx.game.model.RemotePlayer
-com/mygdx/game/dto/mapper/ControlsMapper.java
- com.mygdx.game.dto.mapper.ControlsMapper
+com/mygdx/game/dto/ControlsDto.java
+ com.mygdx.game.dto.ControlsDto
+com/mygdx/game/dto/mapper/TankMapper.java
+ com.mygdx.game.dto.mapper.TankMapper
 com/mygdx/game/model/Player.java
  com.mygdx.game.model.Player
 com/mygdx/game/model/Bullet.java
@@ -20,12 +20,12 @@ com/mygdx/game/util/Vectors.java
  com.mygdx.game.util.Vectors
 com/mygdx/game/dto/PlayerDto.java
  com.mygdx.game.dto.PlayerDto
-com/mygdx/game/controls/RemoteControls.java
- com.mygdx.game.controls.RemoteControls
+com/mygdx/game/model/Visible.java
+ com.mygdx.game.model.Visible
 com/mygdx/game/manager/Collider.java
  com.mygdx.game.manager.Collider
-com/mygdx/game/dto/mapper/PlayerMapper.java
- com.mygdx.game.dto.mapper.PlayerMapper
+com/mygdx/game/connection/Event.java
+ com.mygdx.game.connection.Event
 com/mygdx/game/container/Container.java
  com.mygdx.game.container.Container
 com/mygdx/game/dto/TankDto.java
@@ -42,8 +42,8 @@ com/mygdx/game/dto/UuidDto.java
  com.mygdx.game.dto.UuidDto
 com/mygdx/game/dto/IntroductoryStateDto.java
  com.mygdx.game.dto.IntroductoryStateDto
-com/mygdx/game/dto/ControlsDto.java
- com.mygdx.game.dto.ControlsDto
+com/mygdx/game/dto/GameStateDto.java
+ com.mygdx.game.dto.GameStateDto
 com/mygdx/game/controls/NoopControls.java
  com.mygdx.game.controls.NoopControls
 com/mygdx/game/dto/mapper/BulletMapper.java
@@ -56,11 +56,11 @@ com/mygdx/game/util/Randomize.java
  com.mygdx.game.util.Randomize
 com/mygdx/game/dto/BulletDto.java
  com.mygdx.game.dto.BulletDto
-com/mygdx/game/connection/Event.java
- com.mygdx.game.connection.Event
-com/mygdx/game/model/Visible.java
- com.mygdx.game.model.Visible
-com/mygdx/game/dto/mapper/TankMapper.java
- com.mygdx.game.dto.mapper.TankMapper
-com/mygdx/game/dto/GameStateDto.java
- com.mygdx.game.dto.GameStateDto
+com/mygdx/game/controls/RemoteControls.java
+ com.mygdx.game.controls.RemoteControls
+com/mygdx/game/model/RemotePlayer.java
+ com.mygdx.game.model.RemotePlayer
+com/mygdx/game/dto/mapper/ControlsMapper.java
+ com.mygdx.game.dto.mapper.ControlsMapper
+com/mygdx/game/dto/mapper/PlayerMapper.java
+ com.mygdx.game.dto.mapper.PlayerMapper

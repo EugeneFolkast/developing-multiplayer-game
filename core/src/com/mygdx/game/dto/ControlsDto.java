@@ -40,6 +40,10 @@ public class ControlsDto implements Dto {
         return right;
     }
 
+    public boolean getBack() {
+        return back;
+    }
+
     public boolean getShoot() {
         return shoot;
     }
