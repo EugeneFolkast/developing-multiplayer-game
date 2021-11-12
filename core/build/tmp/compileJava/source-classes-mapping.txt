@@ -10,8 +10,8 @@ com/mygdx/game/model/Player.java
  com.mygdx.game.model.Player
 com/mygdx/game/model/Bullet.java
  com.mygdx.game.model.Bullet
-com/mygdx/game/Game.java
- com.mygdx.game.Game
+com/mygdx/game/dto/BulletDto.java
+ com.mygdx.game.dto.BulletDto
 com/mygdx/game/container/BulletsContainer.java
  com.mygdx.game.container.BulletsContainer
 com/mygdx/game/model/Tank.java
