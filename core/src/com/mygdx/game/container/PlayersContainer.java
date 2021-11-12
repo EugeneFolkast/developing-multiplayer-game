@@ -37,7 +37,7 @@ public class PlayersContainer<PlayerType extends Player> implements Container<Pl
 
     public Stream<Tank> streamShips() {
         return stream()
-                .map(Player::getShip)
+                .map(Player::getTank)
                 .filter(Optional::isPresent)
                 .map(Optional::get);
     }

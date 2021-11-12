@@ -20,12 +20,12 @@ public class Respawner<PlayerType extends Player> {
 
     public void respawn() {
         playersContainer.stream()
-                .filter(player -> !player.getShip().isPresent())
+                .filter(player -> !player.getTank().isPresent())
                 .forEach(this::respawnFor);
     }
 
     public void respawnFor(Player player) {
-        player.setShip(new Tank(player, randomRespawnPoint(), 0));
+        player.setTank(new Tank(player, randomRespawnPoint(), 0));
     }
 
     private Vector2 randomRespawnPoint() {

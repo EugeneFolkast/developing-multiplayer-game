@@ -16,8 +16,8 @@ public class Collider <PlayerType extends Player> {
     public void checkCollisions() {
         bulletsContainer.stream()
                 .forEach(bullet -> playersContainer.stream()
-                        .filter(player -> player.getShip().isPresent())
-                        .filter(player -> player.getShip().get().collidesWith(bullet))
+                        .filter(player -> player.getTank().isPresent())
+                        .filter(player -> player.getTank().get().collidesWith(bullet))
                         .findFirst()
                         .ifPresent(player -> {
                             player.noticeHit();

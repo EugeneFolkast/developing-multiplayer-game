@@ -15,7 +15,7 @@ import java.util.UUID;
 public class PlayerMapper {
     public static PlayerDto fromPlayer(Player player) {
         return new PlayerDto(player.getId().toString(), player.getColor().toString(),
-                player.getShip()
+                player.getTank()
                         .map(TankMapper::fromShip)
                         .orElseGet(() -> null)
         );
@@ -28,19 +28,19 @@ public class PlayerMapper {
 
     public static Player localPlayerFromDto(PlayerDto dto, Controls controls) {
         Player player = new Player(UUID.fromString(dto.getId()), controls, Color.valueOf(dto.getColor()));
-        player.setShip(TankMapper.fromDto(dto.getTankDto(), player));
+        player.setTank(TankMapper.fromDto(dto.getTankDto(), player));
         return player;
     }
 
     public static void updateByDto(Player player, PlayerDto dto) {
-        Optional<Tank> currentShip = player.getShip();
+        Optional<Tank> currentShip = player.getTank();
         TankDto tankDto = dto.getTankDto();
 
         if(currentShip.isPresent() && tankDto != null) {
             TankMapper.updateByDto(currentShip.get(), tankDto);
         }
         else {
-            player.setShip(TankMapper.fromDto(tankDto, player));
+            player.setTank(TankMapper.fromDto(tankDto, player));
         }
     }
 }

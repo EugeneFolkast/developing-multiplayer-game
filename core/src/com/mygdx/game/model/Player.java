@@ -23,7 +23,7 @@ public class Player implements Identifiable {
         this.tank = Optional.empty();
     }
 
-    public void setShip(Tank ship) {
+    public void setTank(Tank ship) {
         this.tank = Optional.ofNullable(ship);
     }
 
@@ -43,7 +43,7 @@ public class Player implements Identifiable {
         return id;
     }
 
-    public Optional<Tank> getShip() {
+    public Optional<Tank> getTank() {
         return tank;
     }
 

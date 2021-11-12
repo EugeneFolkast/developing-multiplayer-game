@@ -23,7 +23,7 @@ public class PlayerRenderer implements Renderer {
 
     @Override
     public void render(ShapeRenderer shapeRenderer) {
-        player.getShip().ifPresent(tank ->
+        player.getTank().ifPresent(tank ->
                 cache
                         .computeIfAbsent(tank, VisibleRenderer::new)
                         .render(shapeRenderer));
