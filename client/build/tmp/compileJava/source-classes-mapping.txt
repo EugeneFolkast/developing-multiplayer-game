@@ -1,21 +1,21 @@
-com/mygdx/game/desktop/connection/Client.java
- com.mygdx.game.desktop.connection.Client
-com/mygdx/game/desktop/rendering/Renderer.java
- com.mygdx.game.desktop.rendering.Renderer
-com/mygdx/game/desktop/DesktopLauncher.java
- com.mygdx.game.desktop.DesktopLauncher
-com/mygdx/game/desktop/controls/KeyboardControls.java
- com.mygdx.game.desktop.controls.KeyboardControls
-com/mygdx/game/desktop/rendering/ContainerRenderer.java
- com.mygdx.game.desktop.rendering.ContainerRenderer
-com/mygdx/game/desktop/rendering/VisibleRenderer.java
- com.mygdx.game.desktop.rendering.VisibleRenderer
 com/mygdx/game/desktop/connection/SocketIoClient.java
  com.mygdx.game.desktop.connection.SocketIoClient
  com.mygdx.game.desktop.connection.SocketIoClient$ConnectionState
+com/mygdx/game/desktop/connection/Client.java
+ com.mygdx.game.desktop.connection.Client
 com/mygdx/game/desktop/rendering/PlayerRenderer.java
  com.mygdx.game.desktop.rendering.PlayerRenderer
 com/mygdx/game/desktop/TankClientGame.java
  com.mygdx.game.desktop.TankClientGame
 com/mygdx/game/desktop/TankClientScreen.java
  com.mygdx.game.desktop.TankClientScreen
+com/mygdx/game/desktop/DesktopLauncher.java
+ com.mygdx.game.desktop.DesktopLauncher
+com/mygdx/game/desktop/rendering/Renderer.java
+ com.mygdx.game.desktop.rendering.Renderer
+com/mygdx/game/desktop/rendering/ContainerRenderer.java
+ com.mygdx.game.desktop.rendering.ContainerRenderer
+com/mygdx/game/desktop/controls/KeyboardControls.java
+ com.mygdx.game.desktop.controls.KeyboardControls
+com/mygdx/game/desktop/rendering/VisibleRenderer.java
+ com.mygdx.game.desktop.rendering.VisibleRenderer
