@@ -10,9 +10,9 @@ import com.badlogic.gdx.graphics.Color;
 import java.util.*;
 public class Player implements Identifiable {
     private final UUID id;
-    private final Controls controls;
+    protected final Controls controls;
     private final Color color;
-    private Optional<Tank> tank;
+    protected Optional<Tank> tank;
     public static final List<Color> POSSIBLE_COLORS = Collections.unmodifiableList(Arrays.asList(
             Color.WHITE, Color.GRAY, Color.BLUE, Color.GREEN, Color.ORANGE, Color.LIGHT_GRAY));
 

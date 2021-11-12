@@ -39,6 +39,20 @@ public class TankServerScreen extends ScreenAdapter {
     @Override
     public void show() {
         server.onPlayerConnected(playerDto -> {
+            if (!playersContainer.stream().findAny().isPresent())
+            {
+                for(int i=0; i<5; i++){
+                    RemotePlayer connected = PlayerMapper.remotePlayerFromDto(playerDto);
+                    respawner.respawnFor(connected);
+                    PlayerDto connectedDto = PlayerMapper.fromPlayer(connected);
+                    GameStateDto gameStateDto = GameStateMapper.fromState(playersContainer, bulletsContainer);
+
+                    server.sendIntroductoryDataToConnected(connectedDto, gameStateDto);
+                    server.notifyOtherPlayersAboutConnected(connectedDto);
+                    playersContainer.add(connected);
+                }
+            }
+
             RemotePlayer connected = PlayerMapper.remotePlayerFromDto(playerDto);
             respawner.respawnFor(connected);
             PlayerDto connectedDto = PlayerMapper.fromPlayer(connected);
