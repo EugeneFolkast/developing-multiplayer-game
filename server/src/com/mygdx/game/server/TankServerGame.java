@@ -29,7 +29,7 @@ public class TankServerGame extends Game {
         Collider collider = new Collider<>(playersContainer, bulletsContainer);
 
         Map<String, String> env = System.getenv();
-        String host = env.getOrDefault("HOST", "192.168.0.102");
+        String host = env.getOrDefault("HOST", "192.168.0.107");
         int port = Integer.parseInt(env.getOrDefault("PORT", "8888"));
         Server server = new SocketIoServer(host, port);
 
