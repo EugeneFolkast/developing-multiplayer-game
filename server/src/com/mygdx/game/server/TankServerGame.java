@@ -18,7 +18,7 @@ import static com.mygdx.game.TankGame.WORLD_WIDTH;
 
 
 public class TankServerGame extends Game {
-    private Screen asteroids;
+    private Screen tanks;
 
     @Override
     public void create() {
@@ -29,20 +29,20 @@ public class TankServerGame extends Game {
         Collider collider = new Collider<>(playersContainer, bulletsContainer);
 
         Map<String, String> env = System.getenv();
-        String host = env.getOrDefault("HOST", "192.168.0.100");
+        String host = env.getOrDefault("HOST", "192.168.0.107");
         int port = Integer.parseInt(env.getOrDefault("PORT", "8888"));
         Server server = new SocketIoServer(host, port);
 
-        asteroids = new TankServerScreen(
+        tanks = new TankServerScreen(
                 server,
                 playersContainer, bulletsContainer,
                 arena, respawner, collider);
 
-        setScreen(asteroids);
+        setScreen(tanks);
     }
 
     @Override
     public void dispose() {
-        asteroids.dispose();
+        tanks.dispose();
     }
 }
