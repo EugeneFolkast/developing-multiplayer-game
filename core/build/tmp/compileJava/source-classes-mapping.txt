@@ -1,33 +1,33 @@
 com/mygdx/game/controls/Controls.java
  com.mygdx.game.controls.Controls
-com/mygdx/game/manager/Respawner.java
- com.mygdx.game.manager.Respawner
-com/mygdx/game/model/RemotePlayer.java
- com.mygdx.game.model.RemotePlayer
+com/mygdx/game/dto/GameStateDto.java
+ com.mygdx.game.dto.GameStateDto
+com/mygdx/game/TankGame.java
+ com.mygdx.game.TankGame
 com/mygdx/game/dto/mapper/ControlsMapper.java
  com.mygdx.game.dto.mapper.ControlsMapper
-com/mygdx/game/model/Player.java
- com.mygdx.game.model.Player
-com/mygdx/game/model/Bullet.java
- com.mygdx.game.model.Bullet
+com/mygdx/game/model/Visible.java
+ com.mygdx.game.model.Visible
+com/mygdx/game/dto/ControlsDto.java
+ com.mygdx.game.dto.ControlsDto
 com/mygdx/game/dto/BulletDto.java
  com.mygdx.game.dto.BulletDto
-com/mygdx/game/container/BulletsContainer.java
- com.mygdx.game.container.BulletsContainer
-com/mygdx/game/model/Tank.java
- com.mygdx.game.model.Tank
+com/mygdx/game/util/Randomize.java
+ com.mygdx.game.util.Randomize
+com/mygdx/game/model/Arena.java
+ com.mygdx.game.model.Arena
 com/mygdx/game/util/Vectors.java
  com.mygdx.game.util.Vectors
 com/mygdx/game/dto/PlayerDto.java
  com.mygdx.game.dto.PlayerDto
-com/mygdx/game/model/Bot.java
- com.mygdx.game.model.Bot
+com/mygdx/game/controls/NoopControls.java
+ com.mygdx.game.controls.NoopControls
 com/mygdx/game/controls/RemoteControls.java
  com.mygdx.game.controls.RemoteControls
-com/mygdx/game/manager/Collider.java
- com.mygdx.game.manager.Collider
-com/mygdx/game/dto/mapper/PlayerMapper.java
- com.mygdx.game.dto.mapper.PlayerMapper
+com/mygdx/game/dto/IntroductoryStateDto.java
+ com.mygdx.game.dto.IntroductoryStateDto
+com/mygdx/game/dto/UuidDto.java
+ com.mygdx.game.dto.UuidDto
 com/mygdx/game/container/Container.java
  com.mygdx.game.container.Container
 com/mygdx/game/dto/TankDto.java
@@ -36,33 +36,31 @@ com/mygdx/game/model/Identifiable.java
  com.mygdx.game.model.Identifiable
 com/mygdx/game/dto/Dto.java
  com.mygdx.game.dto.Dto
+com/mygdx/game/manager/Respawner.java
+ com.mygdx.game.manager.Respawner
+com/mygdx/game/model/RemotePlayer.java
+ com.mygdx.game.model.RemotePlayer
+com/mygdx/game/model/Player.java
+ com.mygdx.game.model.Player
+com/mygdx/game/model/Bullet.java
+ com.mygdx.game.model.Bullet
+com/mygdx/game/container/BulletsContainer.java
+ com.mygdx.game.container.BulletsContainer
+com/mygdx/game/model/Tank.java
+ com.mygdx.game.model.Tank
 com/mygdx/game/container/PlayersContainer.java
  com.mygdx.game.container.PlayersContainer
 com/mygdx/game/dto/mapper/GameStateMapper.java
  com.mygdx.game.dto.mapper.GameStateMapper
-com/mygdx/game/dto/UuidDto.java
- com.mygdx.game.dto.UuidDto
-com/mygdx/game/dto/IntroductoryStateDto.java
- com.mygdx.game.dto.IntroductoryStateDto
-com/mygdx/game/dto/ControlsDto.java
- com.mygdx.game.dto.ControlsDto
-com/mygdx/game/controls/NoopControls.java
- com.mygdx.game.controls.NoopControls
+com/mygdx/game/model/Bot.java
+ com.mygdx.game.model.Bot
 com/mygdx/game/dto/mapper/BulletMapper.java
  com.mygdx.game.dto.mapper.BulletMapper
-com/mygdx/game/TankGame.java
- com.mygdx.game.TankGame
-com/mygdx/game/model/Arena.java
- com.mygdx.game.model.Arena
-com/mygdx/game/util/Randomize.java
- com.mygdx.game.util.Randomize
-com/mygdx/game/dto/BulletDto.java
- com.mygdx.game.dto.BulletDto
+com/mygdx/game/manager/Collider.java
+ com.mygdx.game.manager.Collider
+com/mygdx/game/dto/mapper/PlayerMapper.java
+ com.mygdx.game.dto.mapper.PlayerMapper
 com/mygdx/game/connection/Event.java
  com.mygdx.game.connection.Event
-com/mygdx/game/model/Visible.java
- com.mygdx.game.model.Visible
 com/mygdx/game/dto/mapper/TankMapper.java
  com.mygdx.game.dto.mapper.TankMapper
-com/mygdx/game/dto/GameStateDto.java
- com.mygdx.game.dto.GameStateDto
