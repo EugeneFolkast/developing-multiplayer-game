@@ -31,6 +31,9 @@ public class TankGame extends ApplicationAdapter {
     private Texture easyWall;
     private Texture brakeMeWall;
     private Texture enemyImage;
+    private Texture box;
+    private Texture brokenBox;
+    private Texture barrel;
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private Rectangle player;
@@ -47,13 +50,17 @@ public class TankGame extends ApplicationAdapter {
     @Override
     public void create(){
         playerImage= new Texture(Gdx.files.internal("player.png"));
-        mapImage = new Texture(Gdx.files.internal("mapfield.png"));
+        mapImage = new Texture(Gdx.files.internal("exampleMap.png"));
 //        shotImg = new Texture(Gdx.files.internal("shot.png"));
         enemyImage = new Texture(Gdx.files.internal("enemy.png"));
         fire = new Texture(Gdx.files.internal("fire.png"));
         immortalWall = new Texture(Gdx.files.internal("unbreakablewall.png"));
         brakeMeWall = new Texture(Gdx.files.internal("easytobreak.png"));
         easyWall = new Texture(Gdx.files.internal("brakefromshotwall.png"));
+        brokenBox = new Texture(Gdx.files.internal("boxBroken.png"));
+        box = new Texture(Gdx.files.internal("box.png"));
+        barrel = new Texture(Gdx.files.internal("barrel.png"));
+
         battleMusic1 = Gdx.audio.newMusic(Gdx.files.internal("redalert.mp3"));
         shotSound = Gdx.audio.newSound(Gdx.files.internal("pushka.mp3"));
 
@@ -76,7 +83,7 @@ public class TankGame extends ApplicationAdapter {
 
 
         battleMusic1.setLooping(true);
-//        battleMusic1.play();
+        battleMusic1.play();
     }
 
 //    public void spawnShot(){
@@ -114,9 +121,9 @@ public class TankGame extends ApplicationAdapter {
         batch.draw(mapImage, 0, 0);
         batch.draw(playerImage, player.x, player.y);
         batch.draw(enemyImage, enemy.x, enemy.y);
-        batch.draw(immortalWall, 384, 320);
-        batch.draw(easyWall, 448, 320);
-        batch.draw(brakeMeWall, 512, 320);
+//        batch.draw(immortalWall, 384, 320);
+//        batch.draw(easyWall, 448, 320);
+//        batch.draw(brakeMeWall, 512, 320);
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.W)) {
             playerImage = new Texture("player.png");
