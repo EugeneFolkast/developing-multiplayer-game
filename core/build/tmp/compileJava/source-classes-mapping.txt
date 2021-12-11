@@ -1,2 +1,10 @@
+com/mygdx/game/Player.java
+ com.mygdx.game.Player
+com/mygdx/game/Map.java
+ com.mygdx.game.Map
+com/mygdx/game/Barricade.java
+ com.mygdx.game.Barricade
+com/mygdx/game/Shot.java
+ com.mygdx.game.Shot
 com/mygdx/game/TankGame.java
  com.mygdx.game.TankGame

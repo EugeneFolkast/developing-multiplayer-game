@@ -5,61 +5,53 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.utils.Timer;
 
-import java.sql.Time;
+import java.util.Collection;
 import java.util.Iterator;
-import java.util.Random;
-
+import java.util.UUID;
 
 public class TankGame extends ApplicationAdapter {
-    private Texture mapImage;
-    private Texture playerImage;
-    private Texture shotImg;
     private Texture fire;
-    private Texture immortalWall;
-    private Texture easyWall;
-    private Texture brakeMeWall;
-    private Texture enemyImage;
-    private Texture box;
-    private Texture brokenBox;
-    private Texture barrel;
+    private Texture mapToExport;
     private OrthographicCamera camera;
     private SpriteBatch batch;
-    private Rectangle player;
-    private Rectangle shot;
-    private Rectangle enemy;
+    private Rectangle playerRec;
     private String playerGunDirection;
     private Sound shotSound;
     private Music battleMusic1;
-//    private Array<Rectangle> shots;
-    private Array<Rectangle> easyWalls;
-    private Array<Rectangle> immortalWalls;
-    private Array<Rectangle> brakemeWalls;
+    private int mapArray[][];
+    private Map map;
+    private Player player;
+    private Texture playerImage;
+    private Texture barricadeImage;
+    private Barricade barricade;
+    private Array<Barricade> barricades;
 
     @Override
     public void create(){
-        playerImage= new Texture(Gdx.files.internal("player.png"));
-        mapImage = new Texture(Gdx.files.internal("exampleMap.png"));
-//        shotImg = new Texture(Gdx.files.internal("shot.png"));
-        enemyImage = new Texture(Gdx.files.internal("enemy.png"));
-        fire = new Texture(Gdx.files.internal("fire.png"));
-        immortalWall = new Texture(Gdx.files.internal("unbreakablewall.png"));
-        brakeMeWall = new Texture(Gdx.files.internal("easytobreak.png"));
-        easyWall = new Texture(Gdx.files.internal("brakefromshotwall.png"));
-        brokenBox = new Texture(Gdx.files.internal("boxBroken.png"));
-        box = new Texture(Gdx.files.internal("box.png"));
-        barrel = new Texture(Gdx.files.internal("barrel.png"));
+        mapArray = new int[][]{ {0,1,2,3,0,0,0,0,0,0},
+                                {0,0,0,0,0,0,0,0,0,0},
+                                {0,0,0,0,0,0,0,0,0,0},
+                                {0,0,0,0,0,0,0,0,0,0},
+                                {0,0,0,0,0,0,0,0,0,0},
+                                {0,0,0,0,0,0,0,0,0,0},
+                                {0,0,0,0,0,0,0,0,0,0},
+                                {0,0,0,0,0,0,0,0,0,0},
+                                {0,0,0,0,0,0,0,0,0,0},
+                                {0,0,0,0,0,0,0,0,0,0},
+        };
+        barricadeImage = new Texture(Gdx.files.internal("box.png"));
+        barricade = new Barricade(barricadeImage, 0, 0, 2, UUID.randomUUID());
+
+        mapToExport = new Texture(Gdx.files.internal("mapEmpty.png"));
+        map = new Map(mapToExport, 0, 0, mapArray);
 
         battleMusic1 = Gdx.audio.newMusic(Gdx.files.internal("redalert.mp3"));
         shotSound = Gdx.audio.newSound(Gdx.files.internal("pushka.mp3"));
@@ -69,45 +61,65 @@ public class TankGame extends ApplicationAdapter {
 
         batch = new SpriteBatch();
 
-        enemy = new Rectangle();
-        enemy.x = 320;
-        enemy.y = 320;
-        enemy.width = 64;
-        enemy.height = 64;
+        playerRec = new Rectangle();
+        playerRec.x = 0;
+        playerRec.y = 0;
+        playerRec.width = 64;
+        playerRec.height = 64;
 
-        player = new Rectangle();
-        player.x = 0;
-        player.y = 0;
-        player.width = 64;
-        player.height = 64;
-
+        barricades = new Array<Barricade>();
 
         battleMusic1.setLooping(true);
-        battleMusic1.play();
+//        battleMusic1.play();
     }
-
-//    public void spawnShot(){
-//        shot = new Rectangle();
-//        shot.x = player.x + 64;
-//        shot.y = player.y + 64;
-//        shot.width = 32;
-//        shot.height = 32;
-//        shots.add(shot);
-//    }
 
     public void shooted(){
         shotSound.stop();
         shotSound.play();
-        if(playerGunDirection == "forward") batch.draw(fire = new Texture("fire.png"), player.x, player.y+64);
+        if(playerGunDirection == "forward") batch.draw(fire = new Texture("fire.png"), playerRec.x, playerRec.y+64);
         else{
-            if (playerGunDirection == "left") batch.draw(fire = new Texture("fireLeft.png"), player.x-64, player.y);
+            if (playerGunDirection == "left") batch.draw(fire = new Texture("fireLeft.png"), playerRec.x-64, playerRec.y);
             else{
-                if (playerGunDirection == "right") batch.draw(fire = new Texture("fireRight.png"), player.x+64, player.y);
-                else batch.draw(fire = new Texture("fireDown.png"), player.x, player.y-64);
+                if (playerGunDirection == "right") batch.draw(fire = new Texture("fireRight.png"), playerRec.x+64, playerRec.y);
+                else batch.draw(fire = new Texture("fireDown.png"), playerRec.x, playerRec.y-64);
             }
         }
-        Timer.instance();
+    }
 
+    public void displaceBarricade(Integer type, Integer xCoor, Integer yCoor){
+        if(type != 0){
+            if (type != 1){
+                if (type != 2){
+                    barricadeImage = new Texture(Gdx.files.internal("unbreakablewall.png"));
+                    barricade.setBarricadeImage(barricadeImage);
+                    barricade.setTypeOfDestructiveness(3);
+                    barricade.setxCoor(xCoor);
+                    barricade.setyCoor(yCoor);
+                    barricades.add(barricade);
+                    batch.draw(barricade.getBarricadeImage(), barricade.getxCoor(), barricade.getyCoor());
+                }
+                else {
+                    barricadeImage = new Texture(Gdx.files.internal("brakefromshotwall.png"));
+                    barricade.setBarricadeImage(barricadeImage);
+                    barricade.setTypeOfDestructiveness(2);
+                    barricade.setxCoor(xCoor);
+                    barricade.setyCoor(yCoor);
+                    barricades.add(barricade);
+                    batch.draw(barricade.getBarricadeImage(), barricade.getxCoor(), barricade.getyCoor());
+                }
+
+            }
+            else{
+                barricadeImage = new Texture(Gdx.files.internal("easytobreak.png"));
+                barricade.setBarricadeImage(barricadeImage);
+                barricade.setTypeOfDestructiveness(1);
+                barricade.setxCoor(xCoor);
+                barricade.setyCoor(yCoor);
+                barricades.add(barricade);
+                batch.draw(barricade.getBarricadeImage(), barricade.getxCoor(), barricade.getyCoor());
+
+            }
+        }
     }
 
     @Override
@@ -118,63 +130,25 @@ public class TankGame extends ApplicationAdapter {
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
-        batch.draw(mapImage, 0, 0);
-        batch.draw(playerImage, player.x, player.y);
-        batch.draw(enemyImage, enemy.x, enemy.y);
-//        batch.draw(immortalWall, 384, 320);
-//        batch.draw(easyWall, 448, 320);
-//        batch.draw(brakeMeWall, 512, 320);
+        batch.draw(map.getMapImage(), map.getxCoor(), map.getyCoor());
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-            playerImage = new Texture("player.png");
-            batch.draw(playerImage, player.x, player.y);
-            player.y += 64 ;
-            playerGunDirection = "forward";
-        }
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.S)) {
-            playerImage = new Texture("playerDown.png");
-            batch.draw(playerImage, player.x, player.y);
-            player.y -= 64 ;
-            playerGunDirection = "down";
-        }
+        for (int i = 0; i < map.getMapArray().length; i++){
+            for (int j = 0; j < map.getMapArray()[i].length; j++){
+//                batch.draw(player.getPlayerImage(), player.getxCoordinate(), player.getyCoordinate());
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.D)) {
-            playerImage = new Texture("playerRight.png");
-            batch.draw(playerImage, player.x, player.y);
-            player.x += 64 ;
-            playerGunDirection = "right";
-        }
-
-        if(Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-            playerImage = new Texture("playerLeft.png");
-            batch.draw(playerImage, player.x, player.y);
-            player.x -= 64 ;
-            playerGunDirection = "left";
-        }
-
-        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            shooted();
+                displaceBarricade(map.getMapArray()[i][j], j * 64, i * 64);
+            }
         }
 
         batch.end();
-
-        if(player.x < 0) player.x = 0;
-        if(player.x > 640 - 64) player.x = 640 - 64;
-
-        if(player.y < 0) player.y = 0;
-        if(player.y > 640 - 64) player.y = 640 - 64;
     }
 
     @Override
     public void dispose() {
-        playerImage.dispose();
-        mapImage.dispose();
-        shotImg.dispose();
         battleMusic1.dispose();
         shotSound.dispose();
         fire.dispose();
         batch.dispose();
-
     }
 }
