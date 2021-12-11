@@ -10,6 +10,7 @@ public class Player{
     private Integer health;
     private Integer xCoordinate;
     private Integer yCoordinate;
+    private String gunDirection;
 
     public Player(Texture playerImage, Integer health, Integer xCoordinate, Integer yCoordinate, UUID id){
         this.playerImage = playerImage;
@@ -17,6 +18,10 @@ public class Player{
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.id = id;
+    }
+
+    public void setGunDirection(String gunDirection) {
+        this.gunDirection = gunDirection;
     }
 
     public Integer getHealth() {

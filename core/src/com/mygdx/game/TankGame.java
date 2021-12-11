@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -13,8 +12,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.UUID;
 
 public class TankGame extends ApplicationAdapter {
@@ -33,6 +30,7 @@ public class TankGame extends ApplicationAdapter {
     private Texture barricadeImage;
     private Barricade barricade;
     private Array<Barricade> barricades;
+    private Array<Shot> shots;
 
     @Override
     public void create(){
@@ -68,6 +66,8 @@ public class TankGame extends ApplicationAdapter {
 //        playerRec.height = 64;
 
         barricades = new Array<Barricade>();
+
+        shots = new Array<Shot>();
 
         battleMusic1.setLooping(true);
 //        battleMusic1.play();
@@ -140,7 +140,18 @@ public class TankGame extends ApplicationAdapter {
                 displaceBarricade(map.getMapArray()[i][j], j * 64, i * 64);
             }
         }
-
+        if (Gdx.input.isKeyJustPressed(Input.Keys.W)){
+            System.out.print("forward\n");
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.A)){
+            System.out.print("left\n");
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.D)){
+            System.out.print("right\n");
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.S)){
+            System.out.print("back\n");
+        }
         batch.end();
     }
 
