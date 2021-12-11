@@ -11,6 +11,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.mygdx.game.dto.Barricade;
+import com.mygdx.game.dto.Map;
+import com.mygdx.game.dto.Player;
+import com.mygdx.game.dto.Shot;
 
 import java.util.UUID;
 
@@ -85,39 +89,29 @@ public class TankGame extends ApplicationAdapter {
 //            }
 //        }
 //    }
-
+    public void changeBarricadeStat(Integer type, Integer xCoor, Integer yCoor, String picName){
+        barricadeImage = new Texture(Gdx.files.internal(picName));
+        barricade.setBarricadeImage(barricadeImage);
+        barricade.setTypeOfDestructiveness(type);
+        barricade.setxCoor(xCoor);
+        barricade.setyCoor(yCoor);
+        barricades.add(barricade);
+        batch.draw(barricade.getBarricadeImage(), barricade.getxCoor(), barricade.getyCoor());
+    }
     public void displaceBarricade(Integer type, Integer xCoor, Integer yCoor){
         if(type != 0){
             if (type != 1){
                 if (type != 2){
-                    barricadeImage = new Texture(Gdx.files.internal("unbreakablewall.png"));
-                    barricade.setBarricadeImage(barricadeImage);
-                    barricade.setTypeOfDestructiveness(3);
-                    barricade.setxCoor(xCoor);
-                    barricade.setyCoor(yCoor);
-                    barricades.add(barricade);
-                    batch.draw(barricade.getBarricadeImage(), barricade.getxCoor(), barricade.getyCoor());
+                    changeBarricadeStat(3, xCoor, yCoor, "unbreakablewall.png");
                 }
+
                 else {
-                    barricadeImage = new Texture(Gdx.files.internal("brakefromshotwall.png"));
-                    barricade.setBarricadeImage(barricadeImage);
-                    barricade.setTypeOfDestructiveness(2);
-                    barricade.setxCoor(xCoor);
-                    barricade.setyCoor(yCoor);
-                    barricades.add(barricade);
-                    batch.draw(barricade.getBarricadeImage(), barricade.getxCoor(), barricade.getyCoor());
+                    changeBarricadeStat(2, xCoor, yCoor, "brakefromshotwall.png");
                 }
 
             }
             else{
-                barricadeImage = new Texture(Gdx.files.internal("easytobreak.png"));
-                barricade.setBarricadeImage(barricadeImage);
-                barricade.setTypeOfDestructiveness(1);
-                barricade.setxCoor(xCoor);
-                barricade.setyCoor(yCoor);
-                barricades.add(barricade);
-                batch.draw(barricade.getBarricadeImage(), barricade.getxCoor(), barricade.getyCoor());
-
+                changeBarricadeStat(1, xCoor, yCoor, "easytobreak.png");
             }
         }
     }
@@ -132,7 +126,6 @@ public class TankGame extends ApplicationAdapter {
         batch.begin();
         batch.draw(map.getMapImage(), map.getxCoor(), map.getyCoor());
 
-
         for (int i = 0; i < map.getMapArray().length; i++){
             for (int j = 0; j < map.getMapArray()[i].length; j++){
 //                batch.draw(player.getPlayerImage(), player.getxCoordinate(), player.getyCoordinate());
@@ -140,6 +133,7 @@ public class TankGame extends ApplicationAdapter {
                 displaceBarricade(map.getMapArray()[i][j], j * 64, i * 64);
             }
         }
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.W)){
             System.out.print("forward\n");
         }
