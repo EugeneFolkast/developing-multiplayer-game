@@ -61,11 +61,11 @@ public class TankGame extends ApplicationAdapter {
 
         batch = new SpriteBatch();
 
-        playerRec = new Rectangle();
-        playerRec.x = 0;
-        playerRec.y = 0;
-        playerRec.width = 64;
-        playerRec.height = 64;
+//        playerRec = new Rectangle();
+//        playerRec.x = 0;
+//        playerRec.y = 0;
+//        playerRec.width = 64;
+//        playerRec.height = 64;
 
         barricades = new Array<Barricade>();
 
@@ -73,18 +73,18 @@ public class TankGame extends ApplicationAdapter {
 //        battleMusic1.play();
     }
 
-    public void shooted(){
-        shotSound.stop();
-        shotSound.play();
-        if(playerGunDirection == "forward") batch.draw(fire = new Texture("fire.png"), playerRec.x, playerRec.y+64);
-        else{
-            if (playerGunDirection == "left") batch.draw(fire = new Texture("fireLeft.png"), playerRec.x-64, playerRec.y);
-            else{
-                if (playerGunDirection == "right") batch.draw(fire = new Texture("fireRight.png"), playerRec.x+64, playerRec.y);
-                else batch.draw(fire = new Texture("fireDown.png"), playerRec.x, playerRec.y-64);
-            }
-        }
-    }
+//    public void shooted(){
+//        shotSound.stop();
+//        shotSound.play();
+//        if(playerGunDirection == "forward") batch.draw(fire = new Texture("fire.png"), playerRec.x, playerRec.y+64);
+//        else{
+//            if (playerGunDirection == "left") batch.draw(fire = new Texture("fireLeft.png"), playerRec.x-64, playerRec.y);
+//            else{
+//                if (playerGunDirection == "right") batch.draw(fire = new Texture("fireRight.png"), playerRec.x+64, playerRec.y);
+//                else batch.draw(fire = new Texture("fireDown.png"), playerRec.x, playerRec.y-64);
+//            }
+//        }
+//    }
 
     public void displaceBarricade(Integer type, Integer xCoor, Integer yCoor){
         if(type != 0){
