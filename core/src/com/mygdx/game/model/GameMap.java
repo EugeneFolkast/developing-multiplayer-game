@@ -1,4 +1,4 @@
-package com.mygdx.game.dto;
+package com.mygdx.game.model;
 
 import com.badlogic.gdx.graphics.Texture;
 
