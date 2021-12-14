@@ -1,58 +1,44 @@
-package com.mygdx.game.dto;
+package com.mygdx.game.model;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.game.controls.Controls;
 
+import java.util.Optional;
 import java.util.UUID;
 
-public class Player{
+public class Player implements Identifiable{
     private final UUID id;
-    private Texture playerImage;
-    private Integer health;
-    private Integer xCoordinate;
-    private Integer yCoordinate;
-    private String gunDirection;
+    private final Controls controls;
+    private Optional<Tank> tank;
 
-    public Player(Texture playerImage, Integer health, Integer xCoordinate, Integer yCoordinate, UUID id){
-        this.playerImage = playerImage;
-        this.health = health;
-        this.xCoordinate = xCoordinate;
-        this.yCoordinate = yCoordinate;
+    public Player(UUID id, Controls controls) {
         this.id = id;
+        this.controls = controls;
+        this.tank = Optional.empty();
     }
 
-    public void setGunDirection(String gunDirection) {
-        this.gunDirection = gunDirection;
+    public void setTank(Tank tank) {
+        this.tank = Optional.ofNullable(tank);
     }
 
-    public Integer getHealth() {
-        return health;
+    public void noticeHit() {
+        this.tank = Optional.empty();
     }
 
-    public Integer getxCoordinate() {
-        return xCoordinate;
+    public void update(int[][] map, float delta) {
+        tank.ifPresent(tank -> {
+            tank.control(map, controls);
+        });
     }
 
-    public Integer getyCoordinate() {
-        return yCoordinate;
+    @Override
+    public UUID getId() {
+        return id;
     }
 
-    public Texture getPlayerImage() {
-        return playerImage;
+    public Optional<Tank> getTank() {
+        return tank;
     }
 
-    public void setxCoordinate(Integer xCoordinate) {
-        this.xCoordinate = xCoordinate;
-    }
 
-    public void setyCoordinate(Integer yCoordinate) {
-        this.yCoordinate = yCoordinate;
-    }
-
-    public void setHealth(Integer health) {
-        this.health = health;
-    }
-
-    public void setPlayerImage(Texture playerImage) {
-        this.playerImage = playerImage;
-    }
 }

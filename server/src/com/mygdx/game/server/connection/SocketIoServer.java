@@ -82,7 +82,7 @@ public class SocketIoServer implements Server {
         addEventListener(Event.PLAYER_CONNECTING, (client, json, ackSender) -> {
             PlayerDto connecting = Dto.fromJsonString(json, PlayerDto.class);
             PlayerDto withAssignedId = new PlayerDto(client.getSessionId().toString(),
-                    connecting.getColor(), connecting.getTankDto());
+                    connecting.getTankDto());
             playerJoinedHandler.accept(withAssignedId);
         });
 

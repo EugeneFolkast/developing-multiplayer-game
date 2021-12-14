@@ -2,13 +2,13 @@ package com.mygdx.game.model;
 
 import com.badlogic.gdx.graphics.Texture;
 
-public class Map {
+public class GameMap {
     private Texture mapImage;
     private Integer xCoor;
     private Integer yCoor;
     private int mapArray[][];
 
-    public Map(Texture mapImage, Integer xCoor, Integer yCoor, int[][] mapArray){
+    public GameMap(Texture mapImage, Integer xCoor, Integer yCoor, int[][] mapArray){
         this.mapImage = mapImage;
         this.xCoor = xCoor;
         this.yCoor = yCoor;

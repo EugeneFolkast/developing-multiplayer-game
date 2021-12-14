@@ -1,2 +1,12 @@
-package com.mygdx.game.util;public class Randomize {
+package com.mygdx.game.util;
+
+import java.util.List;
+
+public class Randomize {
+    public static <Thing> Thing fromList(List<Thing> things) {
+        return things.stream()
+                .skip((int) (things.size() * Math.random()))
+                .findAny()
+                .get();
+    }
 }
