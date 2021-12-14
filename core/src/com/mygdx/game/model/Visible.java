@@ -1,15 +1,15 @@
 package com.mygdx.game.model;
 
 public interface Visible {
-    Integer xCoordinate = 0;
-    Integer yCoordinate = 0;
-    void setPosition(int x, int y);
+    float xCoordinate = 0;
+    float yCoordinate = 0;
+    void setPosition(float x, float y);
 
-    public default Integer getxCoordinate() {
+    public default float getxCoordinate() {
         return xCoordinate;
     }
 
-    public default Integer getyCoordinate() {
+    public default float getyCoordinate() {
         return yCoordinate;
     }
 

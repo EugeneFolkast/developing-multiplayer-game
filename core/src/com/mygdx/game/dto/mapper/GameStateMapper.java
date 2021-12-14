@@ -12,7 +12,8 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 public class GameStateMapper {
-    public static GameStateDto fromState(Container<? extends Player> players, Container<Bullet> bullets) {
+    public static GameStateDto fromState(Container<? extends Player> players, Container<Bullet> bullets,
+                                         int[][] arena) {
         List<PlayerDto> playerDtos = players.stream()
                 .map(PlayerMapper::fromPlayer)
                 .collect(toList());
@@ -20,6 +21,6 @@ public class GameStateMapper {
                 .map(BulletMapper::fromBullet)
                 .collect(toList());
 
-        return new GameStateDto(playerDtos, bulletDtos);
+        return new GameStateDto(playerDtos, bulletDtos, arena);
     }
 }

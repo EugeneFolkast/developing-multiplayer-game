@@ -15,22 +15,22 @@ public class Tank implements Visible{
     private final Player owner;
     private String playerImage;
     private Integer health;
-    private Integer xCoordinate;
-    private Integer yCoordinate;
+    private float xCoordinate;
+    private float yCoordinate;
     private String rotation;
     private String gunDirection;
     private boolean canShoot;
     private boolean wantsToShoot;
     private Instant lastShot;
-    private static final Duration SHOT_INTERVAL = Duration.ofMillis(300);
+    private static final Duration SHOT_INTERVAL = Duration.ofMillis(600);
 
-    public Tank(Player owner, String playerImage, Integer health, Integer xCoordinate, Integer yCoordinate, String rotation){
+    public Tank(Player owner, String playerImage, Integer health, float xCoordinate, float yCoordinate, String rotation){
         this.owner = owner;
         this.playerImage = playerImage;
         this.health = health;
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
-        this.rotation = rotation;
+        this.rotation = "forward";
         lastShot = Instant.EPOCH;
     }
 
@@ -51,7 +51,7 @@ public class Tank implements Visible{
     }
 
     @Override
-    public void setPosition(int x, int y) {
+    public void setPosition(float x, float y) {
         xCoordinate=x;
         yCoordinate=y;
     }
@@ -59,42 +59,51 @@ public class Tank implements Visible{
     public Optional<Bullet> obtainBullet() {
         if(canShoot && wantsToShoot) {
             lastShot = Instant.now();
-            Vector2 bulletPos = bulletStartingPosition();
+             Vector2 bulletPos = bulletStartingPosition();
             return Optional.of(new Bullet(
-                    new Texture(Gdx.files.internal("shot.png")),
-                    (int)bulletPos.x, (int)bulletPos.y, 50, UUID.randomUUID(),
-                            owner)
+                    null,
+                    (int)bulletPos.x, (int)bulletPos.y, 50,
+                    UUID.randomUUID(),owner, rotation)
             );
         }
         return Optional.empty();
     }
 
     public void control(int[][] map, Controls controls) {
-        int x = xCoordinate;
-        int y = yCoordinate;
-        if(controls.forward()) {
-            y += 1;
+        float x = xCoordinate;
+        float y = yCoordinate;
+        applyShootingPossibility();
+        if(controls.forward() && map[(int)y+1][(int)x]==0) {
+            y += 0.01;
+            rotation="forward";
         }
-        if(controls.back()) {
-            y -= 1;
+        if(controls.back() && map[(int)y][(int)x+1]==0) {
+            x += 0.01;
+            rotation="right";
         }
-        if(controls.left()) {
-            x -= 1;
+        if(controls.left() && map[(int)y][(int)x]==0) {
+            y -= 0.01;
+            rotation="back";
         }
-        if(controls.right()) {
-            x += 1;
+        if(controls.right() && map[(int)y][(int)x]==0) {
+            x -= 0.01;
+            rotation="left";
         }
+
         wantsToShoot = controls.shoot();
 
-        if(x <=9 && x >= 0 && y <= 8 && y >= 0 && map[x][y] == 0)
-            this.setPosition(x, y);
+        int intx = (int)x;
+        int inty = (int)y;
+
+
+        setPosition(x, y);
     }
 
-    public Integer getxCoordinate() {
+    public float getxCoordinate() {
         return xCoordinate;
     }
 
-    public Integer getyCoordinate() {
+    public float getyCoordinate() {
         return yCoordinate;
     }
 
@@ -134,4 +143,6 @@ public class Tank implements Visible{
 
         return null;
     }
+
+
 }

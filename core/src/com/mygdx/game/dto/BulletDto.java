@@ -5,16 +5,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BulletDto implements Dto {
     private final String id;
-    private final int x;
-    private final int y;
+    private final float x;
+    private final float y;
     private final String rotation;
     private final String shooterId;
 
     @JsonCreator
     public BulletDto(
             @JsonProperty("id") String id,
-            @JsonProperty("x") int x,
-            @JsonProperty("y") int y,
+            @JsonProperty("x") float x,
+            @JsonProperty("y") float y,
             @JsonProperty("rotation") String rotation,
             @JsonProperty("shooterId") String shooterId) {
         this.id = id;
@@ -28,11 +28,11 @@ public class BulletDto implements Dto {
         return id;
     }
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 

@@ -19,8 +19,8 @@ public class BulletMapper {
     public static Bullet fromDto(BulletDto dto, Container<Player> playersContainer) {
         Player shooter = playersContainer.getById(dto.getShooterId())
                 .orElseThrow(() -> new RuntimeException("Cannot find Player of id " + dto.getShooterId() + " to create a Bullet."));
-        return new Bullet(new Texture(Gdx.files.internal("shot.png")), dto.getX(),
-                dto.getY(), 50, UUID.fromString(dto.getId()), shooter);
+        return new Bullet(null, dto.getX(),
+                dto.getY(), 50,UUID.fromString(dto.getId()), shooter, dto.getRotation());
     }
 
     public static void updateByDto(Bullet bullet, BulletDto dto) {

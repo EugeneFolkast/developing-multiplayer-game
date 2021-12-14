@@ -4,25 +4,25 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TankDto implements Dto {
-    private final int x;
-    private final int y;
+    private final float x;
+    private final float y;
     private final String rotation;
 
     @JsonCreator
     public TankDto(
-            @JsonProperty("x") int x,
-            @JsonProperty("y") int y,
+            @JsonProperty("x") float x,
+            @JsonProperty("y") float y,
             @JsonProperty("rotation") String rotation) {
         this.x = x;
         this.y = y;
         this.rotation = rotation;
     }
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 

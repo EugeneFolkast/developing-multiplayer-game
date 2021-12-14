@@ -27,10 +27,7 @@ import com.mygdx.game.dto.mapper.ControlsMapper;
 import com.mygdx.game.dto.mapper.PlayerMapper;
 import com.mygdx.game.model.*;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -73,7 +70,7 @@ public class TankGame extends ApplicationAdapter {
                                 {3,0,0,0,2,0,0,0,0,3},
                                 {3,0,0,0,2,0,0,0,0,3},
                                 {3,0,1,1,2,1,1,1,0,3},
-                                {3,0,0,0,1,0,0,0,0,3},
+                                {3,0,0,0,0,0,0,0,0,3},
                                 {3,0,0,0,1,0,0,0,0,3},
                                 {3,0,1,1,2,1,1,1,0,3},
                                 {3,0,0,0,2,0,0,0,0,3},
@@ -101,7 +98,6 @@ public class TankGame extends ApplicationAdapter {
     public void show() {
         client.onConnected(introductoryStateDto -> {
             localPlayer = PlayerMapper.localPlayerFromDto(introductoryStateDto.getConnected(), new NoopControls());
-            localPlayer.getTank().get().setPlayerImage("player.png");
 
             playersContainer.add(localPlayer);
             GameStateDto gameStateDto = introductoryStateDto.getGameState();
@@ -112,6 +108,8 @@ public class TankGame extends ApplicationAdapter {
             gameStateDto.getBullets().stream()
                     .map(bulletDto -> BulletMapper.fromDto(bulletDto, playersContainer))
                     .forEach(bulletsContainer::add);
+
+            this.map.setMapArray(gameStateDto.getArena());
         });
 
         client.onOtherPlayerConnected(connectedDto -> {
@@ -151,6 +149,8 @@ public class TankGame extends ApplicationAdapter {
                     .filter(id -> !existingBulletIds.contains(id))
                     .collect(toList())
                     .forEach(bulletsContainer::removeById);
+
+            this.map.setMapArray(gameStateDto.getArena());
 
         });
 
@@ -192,6 +192,7 @@ public class TankGame extends ApplicationAdapter {
             System.out.println("Disconnect!!!");
             return;
         }
+        client.sendControls(ControlsMapper.mapToDto(localControls));
 
         ScreenUtils.clear(1, 1, 1, 1);
         camera.update();
@@ -209,15 +210,29 @@ public class TankGame extends ApplicationAdapter {
 
         for (Player item: playersContainer.getAll()) {
             Tank tank = item.getTank().get();
+            if (Objects.equals(tank.getRotation(), "forward"))
+                localPlayer.getTank().get().setPlayerImage("player.png");
+            else if (Objects.equals(tank.getRotation(), "back"))
+                localPlayer.getTank().get().setPlayerImage("playerDown.png");
+            else if (Objects.equals(tank.getRotation(), "right"))
+                localPlayer.getTank().get().setPlayerImage("playerRight.png");
+            else if (Objects.equals(tank.getRotation(), "left"))
+                localPlayer.getTank().get().setPlayerImage("playerLeft.png");
+
             batch.draw(new Texture(Gdx.files.internal(tank.getPlayerImage())),
                     tank.getxCoordinate()* 64, tank.getyCoordinate()* 64);
 
-            System.out.println("x:"+ (tank.getxCoordinate()* 64)
-            +"y:"+ (tank.getyCoordinate()* 64)+"\n"+
-                    tank.getxCoordinate() +" "+tank.getyCoordinate()+"\n");
+
         }
 
-        client.sendControls(ControlsMapper.mapToDto(localControls));
+        for (Bullet item: bulletsContainer.getAll()) {
+            batch.draw(new Texture(Gdx.files.internal("shot.png")),
+                    item.getxCoordinate()* 64, item.getyCoordinate()* 64);
+
+        }
+
+        System.out.println(bulletsContainer.getAll().size());
+
 
         batch.end();
     }

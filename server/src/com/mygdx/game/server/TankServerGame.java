@@ -46,7 +46,7 @@ public class TankServerGame extends Game {
             RemotePlayer connected = PlayerMapper.remotePlayerFromDto(playerDto);
             respawner.respawnFor(connected);
             PlayerDto connectedDto = PlayerMapper.fromPlayer(connected);
-            GameStateDto gameStateDto = GameStateMapper.fromState(playersContainer, bulletsContainer);
+            GameStateDto gameStateDto = GameStateMapper.fromState(playersContainer, bulletsContainer, arena.getMapArray());
 
             server.sendIntroductoryDataToConnected(connectedDto, gameStateDto);
             server.notifyOtherPlayersAboutConnected(connectedDto);
@@ -83,7 +83,7 @@ public class TankServerGame extends Game {
         bulletsContainer.stream()
                 .forEach(arena::ensurePlacementWithinBounds);
 
-        server.broadcast(GameStateMapper.fromState(playersContainer, bulletsContainer));
+        server.broadcast(GameStateMapper.fromState(playersContainer, bulletsContainer, arena.getMapArray()));
     }
 
     @Override
