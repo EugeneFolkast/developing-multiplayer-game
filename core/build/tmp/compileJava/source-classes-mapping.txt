@@ -6,10 +6,10 @@ com/mygdx/game/controls/NoopControls.java
  com.mygdx.game.controls.NoopControls
 com/mygdx/game/dto/mapper/ControlsMapper.java
  com.mygdx.game.dto.mapper.ControlsMapper
-com/mygdx/game/model/Visible.java
- com.mygdx.game.model.Visible
-com/mygdx/game/connection/Event.java
- com.mygdx.game.connection.Event
+com/mygdx/game/model/Player.java
+ com.mygdx.game.model.Player
+com/mygdx/game/model/Bullet.java
+ com.mygdx.game.model.Bullet
 com/mygdx/game/model/GameMap.java
  com.mygdx.game.model.GameMap
 com/mygdx/game/dto/mapper/BulletMapper.java
