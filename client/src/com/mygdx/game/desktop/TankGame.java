@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -45,12 +46,17 @@ public class TankGame extends ApplicationAdapter {
     private Player localPlayer;
     private Texture playerImage;
     private Texture barricadeImage;
+    private Texture bulletImage;
     private Barricade barricade;
     private Array<Barricade> barricades;
     private Array<Bullet> shots;
     private Client client;
     private PlayersContainer<Player> playersContainer;
     private Container<Bullet> bulletsContainer;
+    private Sprite barricadeSprite;
+    private Sprite playerSprite;
+    private Sprite bulletSprite;
+
     Controls localControls;
 
     @Override
@@ -165,8 +171,12 @@ public class TankGame extends ApplicationAdapter {
         barricade.setxCoor(xCoor);
         barricade.setyCoor(yCoor);
         barricades.add(barricade);
-        batch.draw(barricade.getBarricadeImage(), barricade.getxCoor(), barricade.getyCoor());
+//        batch.draw(barricade.getBarricadeImage(), barricade.getxCoor(), barricade.getyCoor());
+        barricadeSprite = new Sprite(barricadeImage, barricade.getxCoor(), barricade.getyCoor(), 64, 64);
+        barricadeSprite.setPosition(barricade.getxCoor(), barricade.getyCoor());
+        barricadeSprite.draw(batch);
     }
+
     public void displaceBarricade(Integer type, Integer xCoor, Integer yCoor){
         if(type != 0){
             if (type != 1){
@@ -219,15 +229,31 @@ public class TankGame extends ApplicationAdapter {
             else if (Objects.equals(tank.getRotation(), "left"))
                 localPlayer.getTank().get().setPlayerImage("playerLeft.png");
 
-            batch.draw(new Texture(Gdx.files.internal(tank.getPlayerImage())),
-                    tank.getxCoordinate()* 64, tank.getyCoordinate()* 64);
+            playerSprite = new Sprite(new Texture(Gdx.files.internal(tank.getPlayerImage())), (int)tank.getxCoordinate()*64, (int)tank.getyCoordinate()* 64, 64, 64);
 
+            playerSprite.setPosition(tank.getxCoordinate()*64, tank.getyCoordinate()* 64);
 
+            playerSprite.draw(batch);
+
+//            batch.draw(new Texture(Gdx.files.internal(tank.getPlayerImage())),
+//                    tank.getxCoordinate()* 64, tank.getyCoordinate()* 64);
         }
 
         for (Bullet item: bulletsContainer.getAll()) {
-            batch.draw(new Texture(Gdx.files.internal("shot.png")),
-                    item.getxCoordinate()* 64, item.getyCoordinate()* 64);
+
+            bulletImage = new Texture(Gdx.files.internal("shot.png"));
+
+            bulletSprite = new Sprite(bulletImage,
+                    (int)item.getxCoordinate()* 64,
+                    (int)item.getyCoordinate()* 64,
+                    64,
+                    64);
+
+            bulletSprite.setPosition(item.getxCoordinate()* 64, item.getyCoordinate()* 64);
+
+            bulletSprite.draw(batch);
+//            batch.draw(new Texture(Gdx.files.internal("shot.png")),
+//                    item.getxCoordinate()* 64, item.getyCoordinate()* 64);
 
         }
 
