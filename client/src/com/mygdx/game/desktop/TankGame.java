@@ -7,7 +7,9 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -199,7 +201,6 @@ public class TankGame extends ApplicationAdapter {
         ScreenUtils.clear(1, 1, 1, 1);
         camera.update();
         batch.setProjectionMatrix(camera.combined);
-
         batch.begin();
         batch.draw(map.getMapImage(), map.getxCoor(), map.getyCoor());
 
@@ -211,23 +212,31 @@ public class TankGame extends ApplicationAdapter {
 
 
         for (Player item: playersContainer.getAll()) {
+            if(item.getTank().equals(Optional.empty())) {
+                continue;
+            }
             Tank tank = item.getTank().get();
-            localPlayer.getTank().get().setPlayerImage("player.png");
+            if(tank.getPlayerImage() == null)
+                localPlayer.getTank().get().setPlayerImage("player.png");
             Vector2 tankPosition = tank.getPosition();
 
-            System.out.println(tankPosition.x);
-            System.out.println(tankPosition.y);
-            System.out.println();
-
-            batch.draw(new Texture(Gdx.files.internal(tank.getPlayerImage())),
-                    tankPosition.x, tankPosition.y);
+            Sprite playerSprite = new Sprite(new Texture(Gdx.files.internal(tank.getPlayerImage())));
+            playerSprite.setOrigin(tankPosition.x, tankPosition.y);
+            playerSprite.setOriginCenter();
+            playerSprite.rotate (tank.getRotation());
+            playerSprite.setPosition(tankPosition.x, tankPosition.y);
+            playerSprite.draw(batch);
 
 
         }
-
+        System.out.println(bulletsContainer.getAll());
         for (Bullet item: bulletsContainer.getAll()) {
-            batch.draw(new Texture(Gdx.files.internal("shot.png")),
-                    item.getPosition().x, item.getPosition().y);
+            Sprite bulletSprite = new Sprite(new Texture(Gdx.files.internal("shot.png")));
+            bulletSprite.setOrigin(item.getPosition().x, item.getPosition().y);
+            bulletSprite.setOriginCenter();
+            bulletSprite.rotate (item.getRotation());
+            bulletSprite.setPosition(item.getPosition().x, item.getPosition().y);
+            bulletSprite.draw(batch);
 
         }
 

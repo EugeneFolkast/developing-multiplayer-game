@@ -13,12 +13,12 @@ import java.util.UUID;
 public class Bullet implements Visible, Identifiable{
     private static final float[] VERTICES = new float[] {
             0, 0,
-            64, 0,
-            64, 64,
-            0, 64
+            32, 0,
+            32, 32,
+            0, 32
     };
-    private static final float SPEED = 500f;
-    private static final float RANGE = 400f;
+    private static final float SPEED = 300f;
+    private static final float RANGE = 300f;
 
     private final Polygon shape;
     private String shotImage;
@@ -33,6 +33,8 @@ public class Bullet implements Visible, Identifiable{
                   Integer damage, UUID id, Player shooter, float rotation){
         shape = new Polygon(VERTICES);
         shape.setPosition(xCoordinate, yCoordinate);
+        shape.setRotation(rotation);
+        shape.setOrigin(0, -Tank.getMiddle().y);
         this.shotImage = shotImage;
         this.damage = damage;
         this.id = id;

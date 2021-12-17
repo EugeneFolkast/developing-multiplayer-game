@@ -44,6 +44,10 @@ com/mygdx/game/dto/IntroductoryStateDto.java
  com.mygdx.game.dto.IntroductoryStateDto
 com/mygdx/game/dto/ControlsDto.java
  com.mygdx.game.dto.ControlsDto
+com/mygdx/game/dto/mapper/BulletMapper.java
+ com.mygdx.game.dto.mapper.BulletMapper
+com/mygdx/game/container/BulletsContainer.java
+ com.mygdx.game.container.BulletsContainer
 com/mygdx/game/manager/Respawner.java
  com.mygdx.game.manager.Respawner
 com/mygdx/game/model/RemotePlayer.java
@@ -52,14 +56,10 @@ com/mygdx/game/model/Player.java
  com.mygdx.game.model.Player
 com/mygdx/game/model/Bullet.java
  com.mygdx.game.model.Bullet
-com/mygdx/game/dto/mapper/BulletMapper.java
- com.mygdx.game.dto.mapper.BulletMapper
 com/mygdx/game/manager/Collider.java
  com.mygdx.game.manager.Collider
 com/mygdx/game/dto/mapper/PlayerMapper.java
  com.mygdx.game.dto.mapper.PlayerMapper
-com/mygdx/game/container/BulletsContainer.java
- com.mygdx.game.container.BulletsContainer
 com/mygdx/game/model/Tank.java
  com.mygdx.game.model.Tank
 com/mygdx/game/container/PlayersContainer.java

@@ -20,12 +20,12 @@ public class Tank implements Visible{
             64, 64,
             64, 0
     };
-    private static final float MAX_SPEED = 500f;
-    private static final float ACCELERATION = 500f;
-    private static final float ROTATION = 20f;
+//    private static final float MAX_SPEED = 200f;
+    private static final float ACCELERATION = 10f;
+    private static final float ROTATION = 50;
     private static final float DRAG = 8f;
     private static final Vector2 MIDDLE = new Vector2(32, 32);
-    private static final Vector2 BULLET_OUTPUT = new Vector2(32, 64);
+    private static final Vector2 BULLET_OUTPUT = new Vector2(0, 80);
     private static final Duration SHOT_INTERVAL = Duration.ofMillis(600);
     private final Polygon shape;
     private final Vector2 velocity;
@@ -88,8 +88,7 @@ public class Tank implements Visible{
             lastShot = Instant.now();
              Vector2 bulletPos = bulletStartingPosition();
             return Optional.of(new Bullet(
-                    null,
-                    (int)bulletPos.x, (int)bulletPos.y, 50,
+                    null, bulletPos.x, bulletPos.y, 50,
                     UUID.randomUUID(),owner, shape.getRotation())
             );
         }
@@ -139,16 +138,17 @@ public class Tank implements Visible{
     }
 
     private void applyMovement(float delta) {
-        velocity.clamp(0, MAX_SPEED);
-
+//        velocity.clamp(0, MAX_SPEED);
+//
         velocity.x -= delta * DRAG * velocity.x;
         velocity.y -= delta * DRAG * velocity.y;
-        rotation -= delta * DRAG * rotation;
+//        rotation -= delta * DRAG * rotation;
+//
+//        float x = delta * velocity.x;
+//        float y = delta * velocity.y;
 
-        float x = delta * velocity.x;
-        float y = delta * velocity.y;
-        shape.translate(x, y);
-        shape.rotate(rotation);
+        shape.translate(velocity.x, velocity.y);
+        shape.setRotation(rotation);
     }
 
     private void applyShootingPossibility() {
