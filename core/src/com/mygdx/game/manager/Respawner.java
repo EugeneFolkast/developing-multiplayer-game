@@ -31,7 +31,7 @@ public class Respawner<PlayerType extends Player> {
         Vector2 startCoord = randomRespawnPoint();
         player.setTank(new Tank(player,
                 null, 200,
-                (int)startCoord.x, (int)startCoord.y, "forward"));
+                (int)startCoord.x, (int)startCoord.y, 0.0F));
     }
 
     private Vector2 randomRespawnPoint() {

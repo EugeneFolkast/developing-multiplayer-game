@@ -6,13 +6,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class TankDto implements Dto {
     private final float x;
     private final float y;
-    private final String rotation;
+    private final float rotation;
 
     @JsonCreator
     public TankDto(
             @JsonProperty("x") float x,
             @JsonProperty("y") float y,
-            @JsonProperty("rotation") String rotation) {
+            @JsonProperty("rotation") float rotation) {
         this.x = x;
         this.y = y;
         this.rotation = rotation;
@@ -26,7 +26,7 @@ public class TankDto implements Dto {
         return y;
     }
 
-    public String getRotation() {
+    public float getRotation() {
         return rotation;
     }
 }

@@ -17,20 +17,20 @@ public class Tank implements Visible{
     private Integer health;
     private float xCoordinate;
     private float yCoordinate;
-    private String rotation;
+    private float rotation;
     private String gunDirection;
     private boolean canShoot;
     private boolean wantsToShoot;
     private Instant lastShot;
     private static final Duration SHOT_INTERVAL = Duration.ofMillis(600);
 
-    public Tank(Player owner, String playerImage, Integer health, float xCoordinate, float yCoordinate, String rotation){
+    public Tank(Player owner, String playerImage, Integer health, float xCoordinate, float yCoordinate, float rotation){
         this.owner = owner;
         this.playerImage = playerImage;
         this.health = health;
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
-        this.rotation = "forward";
+        this.rotation = 0.0F;
         lastShot = Instant.EPOCH;
     }
 
@@ -42,11 +42,11 @@ public class Tank implements Visible{
         return health;
     }
 
-    public String getRotation() {
+    public float getRotation() {
         return rotation;
     }
 
-    public void setRotation(String rotation) {
+    public void setRotation(float rotation) {
         this.rotation = rotation;
     }
 
@@ -74,20 +74,18 @@ public class Tank implements Visible{
         float y = yCoordinate;
         applyShootingPossibility();
         if(controls.forward() && map[(int)y+1][(int)x]==0) {
-            y += 0.01;
-            rotation="forward";
+            x += 0.1 * xCoordinate * rotation;
+            y += 0.1 * xCoordinate * rotation;
         }
         if(controls.back() && map[(int)y][(int)x+1]==0) {
-            x += 0.01;
-            rotation="right";
+            x -= 0.1 * xCoordinate * rotation;
+            y -= 0.1 * xCoordinate * rotation;
         }
         if(controls.left() && map[(int)y][(int)x]==0) {
-            y -= 0.01;
-            rotation="back";
+            rotation += 0.1;
         }
         if(controls.right() && map[(int)y][(int)x]==0) {
-            x -= 0.01;
-            rotation="left";
+            rotation -= 0.1;
         }
 
         wantsToShoot = controls.shoot();
@@ -132,16 +130,7 @@ public class Tank implements Visible{
     }
 
     private Vector2 bulletStartingPosition() {
-        if(Objects.equals(rotation, "left"))
-            return new Vector2(xCoordinate-1, yCoordinate);
-        else if (Objects.equals(rotation, "right"))
-            return new Vector2(xCoordinate+1, yCoordinate);
-        else if (Objects.equals(rotation, "forward"))
-            return new Vector2(xCoordinate, yCoordinate+1);
-        else if (Objects.equals(rotation, "back"))
-            return new Vector2(xCoordinate, yCoordinate-1);
-
-        return null;
+        return new Vector2(xCoordinate, yCoordinate);
     }
 
 

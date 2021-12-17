@@ -220,14 +220,8 @@ public class TankGame extends ApplicationAdapter {
 
         for (Player item: playersContainer.getAll()) {
             Tank tank = item.getTank().get();
-            if (Objects.equals(tank.getRotation(), "forward"))
-                localPlayer.getTank().get().setPlayerImage("player.png");
-            else if (Objects.equals(tank.getRotation(), "back"))
-                localPlayer.getTank().get().setPlayerImage("playerDown.png");
-            else if (Objects.equals(tank.getRotation(), "right"))
-                localPlayer.getTank().get().setPlayerImage("playerRight.png");
-            else if (Objects.equals(tank.getRotation(), "left"))
-                localPlayer.getTank().get().setPlayerImage("playerLeft.png");
+            localPlayer.getTank().get().setPlayerImage("player.png");
+
 
             playerSprite = new Sprite(new Texture(Gdx.files.internal(tank.getPlayerImage())), (int)tank.getxCoordinate()*64, (int)tank.getyCoordinate()* 64, 64, 64);
 

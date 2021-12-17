@@ -1,3 +1,5 @@
+com/mygdx/game/server/TankServerLauncher.java
+ com.mygdx.game.server.TankServerLauncher
 com/mygdx/game/server/TankServerGame.java
  com.mygdx.game.server.TankServerGame
 com/mygdx/game/server/connection/SocketIoServer.java
@@ -5,5 +7,3 @@ com/mygdx/game/server/connection/SocketIoServer.java
  com.mygdx.game.server.connection.SocketIoServer$1
 com/mygdx/game/server/connection/Server.java
  com.mygdx.game.server.connection.Server
-com/mygdx/game/server/TankServerLauncher.java
- com.mygdx.game.server.TankServerLauncher
