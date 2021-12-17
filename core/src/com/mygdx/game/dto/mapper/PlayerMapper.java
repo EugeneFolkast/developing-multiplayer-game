@@ -31,11 +31,11 @@ public class PlayerMapper {
     }
 
     public static void updateByDto(Player player, PlayerDto dto) {
-        Optional<Tank> currentShip = player.getTank();
+        Optional<Tank> currentTank = player.getTank();
         TankDto tankDto = dto.getTankDto();
 
-        if(currentShip.isPresent() && tankDto != null) {
-            TankMapper.updateByDto(currentShip.get(), tankDto);
+        if(currentTank.isPresent() && tankDto != null) {
+            TankMapper.updateByDto(currentTank.get(), tankDto);
         }
         else {
             player.setTank(TankMapper.fromDto(tankDto, player));

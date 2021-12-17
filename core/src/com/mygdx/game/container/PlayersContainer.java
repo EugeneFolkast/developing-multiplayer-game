@@ -31,8 +31,8 @@ public class PlayersContainer <PlayerType extends Player> implements Container<P
     }
 
     @Override
-    public void update(int[][] map, float delta) {
-        players.forEach((player -> player.update(map, delta)));
+    public void update(float delta) {
+        players.forEach((player -> player.update(delta)));
     }
 
     public Stream<Tank> streamTank() {

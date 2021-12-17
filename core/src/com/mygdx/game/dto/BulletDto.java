@@ -7,7 +7,7 @@ public class BulletDto implements Dto {
     private final String id;
     private final float x;
     private final float y;
-    private final String rotation;
+    private final float rotation;
     private final String shooterId;
 
     @JsonCreator
@@ -15,7 +15,7 @@ public class BulletDto implements Dto {
             @JsonProperty("id") String id,
             @JsonProperty("x") float x,
             @JsonProperty("y") float y,
-            @JsonProperty("rotation") String rotation,
+            @JsonProperty("rotation") float rotation,
             @JsonProperty("shooterId") String shooterId) {
         this.id = id;
         this.x = x;
@@ -36,7 +36,7 @@ public class BulletDto implements Dto {
         return y;
     }
 
-    public String getRotation() {
+    public float getRotation() {
         return rotation;
     }
 

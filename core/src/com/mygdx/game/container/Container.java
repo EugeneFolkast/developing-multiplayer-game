@@ -13,7 +13,7 @@ public interface Container<Thing extends Identifiable> {
     default Stream<Thing> stream() {
         return getAll().stream();
     }
-    void update(int[][] map, float delta);
+    void update(float delta);
     default Optional<Thing> getById(UUID id) {
         return stream()
                 .filter(thing -> thing.isIdEqual(id))

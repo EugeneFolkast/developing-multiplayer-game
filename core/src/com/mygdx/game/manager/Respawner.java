@@ -31,11 +31,10 @@ public class Respawner<PlayerType extends Player> {
         Vector2 startCoord = randomRespawnPoint();
         player.setTank(new Tank(player,
                 null, 200,
-                (int)startCoord.x, (int)startCoord.y, "forward"));
+                (int)startCoord.x, (int)startCoord.y, 0));
     }
 
     private Vector2 randomRespawnPoint() {
-//        return new Vector2(random.nextInt(8), random.nextInt(8));
-        return new Vector2(2, 2);
+        return new Vector2(random.nextInt(Math.round(widthBound)), random.nextInt(Math.round(heightBound)));
     }
 }

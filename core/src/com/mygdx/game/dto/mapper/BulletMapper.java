@@ -2,6 +2,7 @@ package com.mygdx.game.dto.mapper;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.container.Container;
 import com.mygdx.game.dto.BulletDto;
 import com.mygdx.game.model.Bullet;
@@ -11,8 +12,9 @@ import java.util.UUID;
 
 public class BulletMapper {
     public static BulletDto fromBullet(Bullet bullet) {
+        Vector2 position = bullet.getPosition();
         return new BulletDto(bullet.getId().toString(),
-                bullet.getxCoordinate(), bullet.getyCoordinate(), bullet.getRotation(),
+                position.x, position.y, bullet.getRotation(),
                 bullet.getShooterId().toString());
     }
 
@@ -24,6 +26,6 @@ public class BulletMapper {
     }
 
     public static void updateByDto(Bullet bullet, BulletDto dto) {
-        bullet.setPosition(dto.getX(), dto.getY());
+        bullet.setPosition(new Vector2(dto.getX(), dto.getY()));
     }
 }

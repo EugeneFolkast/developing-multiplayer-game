@@ -1,6 +1,9 @@
 package com.mygdx.game.model;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.util.Vectors;
 
 import java.time.Instant;
 import java.util.Objects;
@@ -8,22 +11,29 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class Bullet implements Visible, Identifiable{
-    private Texture shotImage;
-    private float xCoordinate;
-    private float yCoordinate;
+    private static final float[] VERTICES = new float[] {
+            0, 0,
+            64, 0,
+            64, 64,
+            0, 64
+    };
+    private static final float SPEED = 500f;
+    private static final float RANGE = 400f;
+
+    private final Polygon shape;
+    private String shotImage;
     private Integer damage;
     private final UUID id;
-    private String rotation;
+    private float rotation;
     private final Player shooter;
     private float remainingRange;
     private boolean hasHitSomething;
-    private static final float RANGE = 30;
 
-    public Bullet(Texture shotImage, float xCoordinate, float yCoordinate,
-                  Integer damage, UUID id, Player shooter, String rotation){
+    public Bullet(String shotImage, float xCoordinate, float yCoordinate,
+                  Integer damage, UUID id, Player shooter, float rotation){
+        shape = new Polygon(VERTICES);
+        shape.setPosition(xCoordinate, yCoordinate);
         this.shotImage = shotImage;
-        this.xCoordinate = xCoordinate;
-        this.yCoordinate = yCoordinate;
         this.damage = damage;
         this.id = id;
         this.shooter = shooter;
@@ -38,44 +48,26 @@ public class Bullet implements Visible, Identifiable{
         return id;
     }
 
-    @Override
-    public void setPosition(float x, float y) {
-        xCoordinate = x;
-        yCoordinate = y;
-    }
 
     public UUID getShooterId() {
         return shooter.getId();
     }
 
     @Override
-    public float getxCoordinate() {
-        return xCoordinate;
+    public Polygon getShape() {
+        return shape;
     }
 
-    @Override
-    public float getyCoordinate() {
-        return yCoordinate;
-    }
 
-    public String getRotation() {
+    public float getRotation() {
         return rotation;
     }
 
-    public void move(int[][] map) {
-        remainingRange -= 1;
-        if (Objects.equals(rotation, "left")){
-            xCoordinate -= (float) 0.1;
-        }
-        else if (Objects.equals(rotation, "right")){
-            xCoordinate += (float) 0.1;
-        }
-        else if (Objects.equals(rotation, "back")){
-            yCoordinate -= (float) 0.1;
-        }
-        else if (Objects.equals(rotation, "forward")){
-            yCoordinate += (float) 0.1;
-        }
+    public void move(float delta) {
+        Vector2 direction = Vectors.getDirectionVector(shape.getRotation());
+        Vector2 movement = new Vector2(direction.x * delta * SPEED, direction.y * delta * SPEED);
+        remainingRange -= movement.len();
+        shape.translate(movement.x, movement.y);
     }
 
     public boolean isInRange() {

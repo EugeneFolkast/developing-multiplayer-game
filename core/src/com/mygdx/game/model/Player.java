@@ -25,9 +25,10 @@ public class Player implements Identifiable{
         this.tank = Optional.empty();
     }
 
-    public void update(int[][] map, float delta) {
+    public void update(float delta) {
         tank.ifPresent(tank -> {
-            tank.control(map, controls);
+            tank.control(controls, delta);
+            tank.update(delta);
         });
     }
 

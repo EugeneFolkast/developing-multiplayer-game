@@ -7,22 +7,22 @@ import com.mygdx.game.controls.Controls;
 public class KeyboardControls implements Controls {
     @Override
     public boolean forward() {
-        return Gdx.input.isKeyPressed(Input.Keys.UP);
+        return Gdx.input.isKeyPressed(Input.Keys.W);
     }
 
     @Override
     public boolean left() {
-        return Gdx.input.isKeyPressed(Input.Keys.LEFT);
+        return Gdx.input.isKeyPressed(Input.Keys.A);
     }
 
     @Override
     public boolean right() {
-        return Gdx.input.isKeyPressed(Input.Keys.RIGHT);
+        return Gdx.input.isKeyPressed(Input.Keys.D);
     }
 
     @Override
     public boolean back() {
-        return Gdx.input.isKeyPressed(Input.Keys.DOWN);
+        return Gdx.input.isKeyPressed(Input.Keys.S);
     }
 
     @Override

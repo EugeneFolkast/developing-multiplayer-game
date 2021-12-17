@@ -1,9 +1,14 @@
 package com.mygdx.game.model;
 
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
+
 public class Arena {
     private int mapArray[][];
+    private final Rectangle bounds;
 
     public Arena() {
+        bounds = new Rectangle(0, 0, 640, 640);
         mapArray = new int[][]{ {3,3,3,3,3,3,3,3,3,3},
                                 {3,0,0,0,2,0,0,0,0,3},
                                 {3,0,0,0,2,0,0,0,0,3},
@@ -21,10 +26,16 @@ public class Arena {
     }
 
     public void ensurePlacementWithinBounds(Visible visible) {
-//        int x = visible.getxCoordinate();
-//        int y = visible.getyCoordinate();
-//
-//        if(x <=9 && x >= 0 && y <= 8 && y >= 0 && mapArray[x] [y] == 0)
-//            visible.setPosition(x, y);
+        Polygon shape = visible.getShape();
+        Rectangle shapeBounds = shape.getBoundingRectangle();
+        float x = shape.getX();
+        float y = shape.getY();
+
+        if(x + shapeBounds.width < bounds.x) x = bounds.width;
+        if(y + shapeBounds.height < bounds.y) y = bounds.height;
+        if(x > bounds.width) x = bounds.x - shapeBounds.width;
+        if(y > bounds.height) y = bounds.y - shapeBounds.height;
+
+        shape.setPosition(x, y);
     }
 }

@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.container.BulletsContainer;
@@ -22,6 +23,7 @@ import com.mygdx.game.desktop.controls.KeyboardControls;
 import com.mygdx.game.dto.BulletDto;
 import com.mygdx.game.dto.GameStateDto;
 import com.mygdx.game.dto.PlayerDto;
+import com.mygdx.game.dto.TankDto;
 import com.mygdx.game.dto.mapper.BulletMapper;
 import com.mygdx.game.dto.mapper.ControlsMapper;
 import com.mygdx.game.dto.mapper.PlayerMapper;
@@ -62,7 +64,7 @@ public class TankGame extends ApplicationAdapter {
         Map<String, String> env = System.getenv();
         String protocol = env.getOrDefault("PROTOCOL", "http");
         String host = env.getOrDefault("HOST", "localhost");
-        int port = Integer.parseInt(env.getOrDefault("PORT", "8888"));
+        int port = Integer.parseInt(env.getOrDefault("PORT", "8080"));
         client = new SocketIoClient(protocol, host, port);
         show();
 
@@ -210,28 +212,25 @@ public class TankGame extends ApplicationAdapter {
 
         for (Player item: playersContainer.getAll()) {
             Tank tank = item.getTank().get();
-            if (Objects.equals(tank.getRotation(), "forward"))
-                localPlayer.getTank().get().setPlayerImage("player.png");
-            else if (Objects.equals(tank.getRotation(), "back"))
-                localPlayer.getTank().get().setPlayerImage("playerDown.png");
-            else if (Objects.equals(tank.getRotation(), "right"))
-                localPlayer.getTank().get().setPlayerImage("playerRight.png");
-            else if (Objects.equals(tank.getRotation(), "left"))
-                localPlayer.getTank().get().setPlayerImage("playerLeft.png");
+            localPlayer.getTank().get().setPlayerImage("player.png");
+            Vector2 tankPosition = tank.getPosition();
+
+            System.out.println(tankPosition.x);
+            System.out.println(tankPosition.y);
+            System.out.println();
 
             batch.draw(new Texture(Gdx.files.internal(tank.getPlayerImage())),
-                    tank.getxCoordinate()* 64, tank.getyCoordinate()* 64);
+                    tankPosition.x, tankPosition.y);
 
 
         }
 
         for (Bullet item: bulletsContainer.getAll()) {
             batch.draw(new Texture(Gdx.files.internal("shot.png")),
-                    item.getxCoordinate()* 64, item.getyCoordinate()* 64);
+                    item.getPosition().x, item.getPosition().y);
 
         }
 
-        System.out.println(bulletsContainer.getAll().size());
 
 
         batch.end();

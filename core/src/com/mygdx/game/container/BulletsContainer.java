@@ -32,8 +32,8 @@ public class BulletsContainer implements Container<Bullet> {
     }
 
     @Override
-    public void update(int[][] map, float delta) {
-        bullets.forEach(bullet -> bullet.move(map));
+    public void update(float delta) {
+        bullets.forEach(bullet -> bullet.move(delta));
         bullets.removeIf(bullet -> !bullet.isInRange() || bullet.hasHitSomething());
     }
 }

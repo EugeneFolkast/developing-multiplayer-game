@@ -2,8 +2,10 @@ package com.mygdx.game.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.controls.Controls;
+import com.mygdx.game.util.Vectors;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -12,49 +14,74 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class Tank implements Visible{
+    private static final float[] VERTICES = new float[] {
+            0, 0,
+            0, 64,
+            64, 64,
+            64, 0
+    };
+    private static final float MAX_SPEED = 500f;
+    private static final float ACCELERATION = 500f;
+    private static final float ROTATION = 20f;
+    private static final float DRAG = 8f;
+    private static final Vector2 MIDDLE = new Vector2(32, 32);
+    private static final Vector2 BULLET_OUTPUT = new Vector2(32, 64);
+    private static final Duration SHOT_INTERVAL = Duration.ofMillis(600);
+    private final Polygon shape;
+    private final Vector2 velocity;
+
     private final Player owner;
     private String playerImage;
     private Integer health;
-    private float xCoordinate;
-    private float yCoordinate;
-    private String rotation;
+    private float rotation;
     private String gunDirection;
     private boolean canShoot;
     private boolean wantsToShoot;
     private Instant lastShot;
-    private static final Duration SHOT_INTERVAL = Duration.ofMillis(600);
 
-    public Tank(Player owner, String playerImage, Integer health, float xCoordinate, float yCoordinate, String rotation){
+    public Tank(Player owner, String playerImage, Integer health, float xCoordinate, float yCoordinate, float rotation){
         this.owner = owner;
         this.playerImage = playerImage;
         this.health = health;
-        this.xCoordinate = xCoordinate;
-        this.yCoordinate = yCoordinate;
-        this.rotation = "forward";
+        this.rotation = rotation;
         lastShot = Instant.EPOCH;
+
+        shape = new Polygon(VERTICES);
+        shape.setOrigin(MIDDLE.x, MIDDLE.y);
+        shape.setPosition(xCoordinate, yCoordinate);
+        shape.setRotation(rotation);
+        velocity = new Vector2(0, 0);
     }
 
-    public void setGunDirection(String gunDirection) {
-        this.gunDirection = gunDirection;
+    public static Vector2 getMiddle() {
+        return new Vector2(MIDDLE);
+    }
+
+    public void control(Controls controls, float delta) {
+        if(controls.forward()) moveForwards(delta);
+        if(controls.left()) moveBack(delta);
+        if(controls.right()) rotateLeft(delta);
+        if(controls.back()) rotateRight(delta);
+        wantsToShoot = controls.shoot();
+    }
+
+    public void update(float delta) {
+        applyMovement(delta);
+        applyShootingPossibility();
     }
 
     public Integer getHealth() {
         return health;
     }
 
-    public String getRotation() {
+    public float getRotation() {
         return rotation;
     }
 
-    public void setRotation(String rotation) {
+    public void setRotation(float rotation) {
         this.rotation = rotation;
     }
 
-    @Override
-    public void setPosition(float x, float y) {
-        xCoordinate=x;
-        yCoordinate=y;
-    }
 
     public Optional<Bullet> obtainBullet() {
         if(canShoot && wantsToShoot) {
@@ -63,60 +90,24 @@ public class Tank implements Visible{
             return Optional.of(new Bullet(
                     null,
                     (int)bulletPos.x, (int)bulletPos.y, 50,
-                    UUID.randomUUID(),owner, rotation)
+                    UUID.randomUUID(),owner, shape.getRotation())
             );
         }
         return Optional.empty();
+
     }
 
-    public void control(int[][] map, Controls controls) {
-        float x = xCoordinate;
-        float y = yCoordinate;
-        applyShootingPossibility();
-        if(controls.forward() && map[(int)y+1][(int)x]==0) {
-            y += 0.01;
-            rotation="forward";
-        }
-        if(controls.back() && map[(int)y][(int)x+1]==0) {
-            x += 0.01;
-            rotation="right";
-        }
-        if(controls.left() && map[(int)y][(int)x]==0) {
-            y -= 0.01;
-            rotation="back";
-        }
-        if(controls.right() && map[(int)y][(int)x]==0) {
-            x -= 0.01;
-            rotation="left";
-        }
-
-        wantsToShoot = controls.shoot();
-
-        int intx = (int)x;
-        int inty = (int)y;
-
-
-        setPosition(x, y);
+    @Override
+    public Polygon getShape() {
+        return shape;
     }
 
-    public float getxCoordinate() {
-        return xCoordinate;
-    }
-
-    public float getyCoordinate() {
-        return yCoordinate;
+    private Vector2 getDirection() {
+        return Vectors.getDirectionVector(shape.getRotation());
     }
 
     public String getPlayerImage() {
         return playerImage;
-    }
-
-    public void setxCoordinate(Integer xCoordinate) {
-        this.xCoordinate = xCoordinate;
-    }
-
-    public void setyCoordinate(Integer yCoordinate) {
-        this.yCoordinate = yCoordinate;
     }
 
     public void setHealth(Integer health) {
@@ -127,21 +118,45 @@ public class Tank implements Visible{
         this.playerImage = playerImage;
     }
 
+    private void moveForwards(float delta) {
+        Vector2 direction = getDirection();
+        velocity.x += delta * ACCELERATION * direction.x;
+        velocity.y += delta * ACCELERATION * direction.y;
+    }
+
+    private void moveBack(float delta) {
+        Vector2 direction = getDirection();
+        velocity.x -= delta * ACCELERATION * direction.x;
+        velocity.y -= delta * ACCELERATION * direction.y;
+    }
+
+    private void rotateLeft(float delta) {
+        rotation += delta * ROTATION;
+    }
+
+    private void rotateRight(float delta) {
+        rotation -= delta * ROTATION;
+    }
+
+    private void applyMovement(float delta) {
+        velocity.clamp(0, MAX_SPEED);
+
+        velocity.x -= delta * DRAG * velocity.x;
+        velocity.y -= delta * DRAG * velocity.y;
+        rotation -= delta * DRAG * rotation;
+
+        float x = delta * velocity.x;
+        float y = delta * velocity.y;
+        shape.translate(x, y);
+        shape.rotate(rotation);
+    }
+
     private void applyShootingPossibility() {
         canShoot = Instant.now().isAfter(lastShot.plus(SHOT_INTERVAL));
     }
 
     private Vector2 bulletStartingPosition() {
-        if(Objects.equals(rotation, "left"))
-            return new Vector2(xCoordinate-1, yCoordinate);
-        else if (Objects.equals(rotation, "right"))
-            return new Vector2(xCoordinate+1, yCoordinate);
-        else if (Objects.equals(rotation, "forward"))
-            return new Vector2(xCoordinate, yCoordinate+1);
-        else if (Objects.equals(rotation, "back"))
-            return new Vector2(xCoordinate, yCoordinate-1);
-
-        return null;
+        return new Vector2(shape.getX(), shape.getY()).add(BULLET_OUTPUT);
     }
 
 
