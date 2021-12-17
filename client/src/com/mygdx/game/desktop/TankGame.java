@@ -5,11 +5,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.container.BulletsContainer;
@@ -53,9 +55,6 @@ public class TankGame extends ApplicationAdapter {
     private Client client;
     private PlayersContainer<Player> playersContainer;
     private Container<Bullet> bulletsContainer;
-    private Sprite barricadeSprite;
-    private Sprite playerSprite;
-    private Sprite bulletSprite;
 
     Controls localControls;
 
@@ -171,8 +170,7 @@ public class TankGame extends ApplicationAdapter {
         barricade.setxCoor(xCoor);
         barricade.setyCoor(yCoor);
         barricades.add(barricade);
-//        batch.draw(barricade.getBarricadeImage(), barricade.getxCoor(), barricade.getyCoor());
-        barricadeSprite = new Sprite(barricadeImage, barricade.getxCoor(), barricade.getyCoor(), 64, 64);
+        Sprite barricadeSprite = new Sprite(barricadeImage);
         barricadeSprite.setPosition(barricade.getxCoor(), barricade.getyCoor());
         barricadeSprite.draw(batch);
     }
@@ -197,6 +195,8 @@ public class TankGame extends ApplicationAdapter {
 
     @Override
     public void render(){
+        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+
         if(!client.isConnected())
         {
             System.out.println("Disconnect!!!");
@@ -204,7 +204,6 @@ public class TankGame extends ApplicationAdapter {
         }
         client.sendControls(ControlsMapper.mapToDto(localControls));
 
-        ScreenUtils.clear(1, 1, 1, 1);
         camera.update();
         batch.setProjectionMatrix(camera.combined);
 
@@ -217,7 +216,6 @@ public class TankGame extends ApplicationAdapter {
             }
         }
 
-
         for (Player item: playersContainer.getAll()) {
             Tank tank = item.getTank().get();
             localPlayer.getTank().get().setPlayerImage("player.png");
@@ -225,29 +223,21 @@ public class TankGame extends ApplicationAdapter {
 
             playerSprite = new Sprite(new Texture(Gdx.files.internal(tank.getPlayerImage())), (int)tank.getxCoordinate()*64, (int)tank.getyCoordinate()* 64, 64, 64);
 
+            Sprite playerSprite = new Sprite(new Texture(Gdx.files.internal(tank.getPlayerImage())));
             playerSprite.setPosition(tank.getxCoordinate()*64, tank.getyCoordinate()* 64);
 
             playerSprite.draw(batch);
-
-//            batch.draw(new Texture(Gdx.files.internal(tank.getPlayerImage())),
-//                    tank.getxCoordinate()* 64, tank.getyCoordinate()* 64);
         }
 
         for (Bullet item: bulletsContainer.getAll()) {
 
             bulletImage = new Texture(Gdx.files.internal("shot.png"));
 
-            bulletSprite = new Sprite(bulletImage,
-                    (int)item.getxCoordinate()* 64,
-                    (int)item.getyCoordinate()* 64,
-                    64,
-                    64);
+            Sprite bulletSprite = new Sprite(bulletImage);
 
             bulletSprite.setPosition(item.getxCoordinate()* 64, item.getyCoordinate()* 64);
 
             bulletSprite.draw(batch);
-//            batch.draw(new Texture(Gdx.files.internal("shot.png")),
-//                    item.getxCoordinate()* 64, item.getyCoordinate()* 64);
 
         }
 

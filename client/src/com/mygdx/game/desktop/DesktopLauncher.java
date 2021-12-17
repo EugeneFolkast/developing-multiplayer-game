@@ -8,7 +8,7 @@ import com.mygdx.game.TankGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.title = "Tank game";
+		config.title = "TankGame";
 		config.useGL30 = true;
 		config.height = 640;
 		config.width = 640;
