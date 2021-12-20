@@ -8,11 +8,13 @@ import java.util.UUID;
 public class Collider<PlayerType extends Player> {
     private final Container<Barricade> barricadeContainer;
     private final Container<PlayerType> playersContainer;
+    private final Container<PlayerType> botsContainer;
     private final Container<Bullet> bulletsContainer;
 
-    public Collider(Container<PlayerType> playersContainer, Container<Bullet> bulletsContainer,
-                    Container<Barricade> barricadeContainer) {
+    public Collider(Container<PlayerType> playersContainer, Container<PlayerType> botsContainer,
+                    Container<Bullet> bulletsContainer, Container<Barricade> barricadeContainer) {
         this.playersContainer = playersContainer;
+        this.botsContainer = botsContainer;
         this.bulletsContainer = bulletsContainer;
         this.barricadeContainer = barricadeContainer;
     }
@@ -21,6 +23,14 @@ public class Collider<PlayerType extends Player> {
         bulletsContainer.stream()
                 .forEach(bullet -> {
                     playersContainer.stream()
+                            .filter(player -> player.getTank().isPresent())
+                            .filter(player -> player.getTank().get().collidesWith(bullet))
+                            .findFirst()
+                            .ifPresent(player -> {
+                                player.noticeHit();
+                                bullet.noticeHit();
+                            });
+                    botsContainer.stream()
                             .filter(player -> player.getTank().isPresent())
                             .filter(player -> player.getTank().get().collidesWith(bullet))
                             .findFirst()

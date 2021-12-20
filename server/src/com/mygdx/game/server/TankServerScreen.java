@@ -3,6 +3,7 @@ package com.mygdx.game.server;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.container.BarricadeContainer;
+import com.mygdx.game.container.BotContainer;
 import com.mygdx.game.container.BulletsContainer;
 import com.mygdx.game.container.PlayersContainer;
 import com.mygdx.game.dto.GameStateDto;
@@ -14,6 +15,7 @@ import com.mygdx.game.manager.Collider;
 import com.mygdx.game.manager.Respawner;
 import com.mygdx.game.model.Arena;
 import com.mygdx.game.model.Barricade;
+import com.mygdx.game.model.Bot;
 import com.mygdx.game.model.RemotePlayer;
 import com.mygdx.game.server.connection.Server;
 
@@ -24,20 +26,24 @@ public class TankServerScreen extends ScreenAdapter {
     private final PlayersContainer<RemotePlayer> playersContainer;
     private final BulletsContainer bulletsContainer;
     private final Arena arena;
-    private final Respawner respawner;
+    private final Respawner respawnerPlayer;
+    private final Respawner respawnerBot;
     private final Collider collider;
     private final BarricadeContainer barricadeContainer;
+    private final BotContainer<Bot> botContainer;
 
     public TankServerScreen(Server server,
                                  PlayersContainer<RemotePlayer> playersContainer, BulletsContainer bulletsContainer,
-                                 BarricadeContainer barricadeContainer,
-                                 Arena arena, Respawner respawner, Collider collider) {
+                                 BarricadeContainer barricadeContainer, BotContainer<Bot> botContainer,
+                                 Arena arena, Respawner respawnerPlayer, Respawner respawnerBot, Collider collider) {
         this.server = server;
         this.playersContainer = playersContainer;
         this.bulletsContainer = bulletsContainer;
         this.barricadeContainer = barricadeContainer;
+        this.botContainer = botContainer;
         this.arena = arena;
-        this.respawner = respawner;
+        this.respawnerPlayer = respawnerPlayer;
+        this.respawnerBot = respawnerBot;
         this.collider = collider;
     }
 
@@ -54,11 +60,18 @@ public class TankServerScreen extends ScreenAdapter {
             }
         }
 
+        for (int i =0; i<2; i++) {
+            Bot bot = new Bot(UUID.randomUUID());
+            botContainer.add(bot);
+            respawnerBot.respawnFor(bot);
+        }
+
+
         server.onPlayerConnected(playerDto -> {
             RemotePlayer connected = PlayerMapper.remotePlayerFromDto(playerDto);
-            respawner.respawnFor(connected);
+            respawnerPlayer.respawnFor(connected);
             PlayerDto connectedDto = PlayerMapper.fromPlayer(connected);
-            GameStateDto gameStateDto = GameStateMapper.fromState(playersContainer, bulletsContainer, arena.getMapArray());
+            GameStateDto gameStateDto = GameStateMapper.fromState(playersContainer, botContainer, bulletsContainer, arena.getMapArray());
 
             server.sendIntroductoryDataToConnected(connectedDto, gameStateDto);
             server.notifyOtherPlayersAboutConnected(connectedDto);
@@ -82,7 +95,8 @@ public class TankServerScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-        respawner.respawn();
+        respawnerPlayer.respawn();
+        respawnerBot.respawn();
         collider.checkBulletCollisions();
 
         playersContainer.update(delta);
@@ -98,7 +112,7 @@ public class TankServerScreen extends ScreenAdapter {
         barricadeContainer.update(delta);
         mapUpdate();
 
-        server.broadcast(GameStateMapper.fromState(playersContainer, bulletsContainer, arena.getMapArray()));
+        server.broadcast(GameStateMapper.fromState(playersContainer, botContainer, bulletsContainer, arena.getMapArray()));
     }
 
     private void mapUpdate(){
