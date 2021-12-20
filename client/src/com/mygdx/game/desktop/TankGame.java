@@ -222,11 +222,12 @@ public class TankGame extends ApplicationAdapter {
             System.out.println(tankPosition);
 
             Sprite playerSprite = new Sprite(new Texture(Gdx.files.internal(tank.getPlayerImage())));
-            playerSprite.setOrigin(tankPosition.x + 16, tankPosition.y + 16);
-            playerSprite.setOriginCenter();
-            playerSprite.rotate (tank.getRotation());
+//            playerSprite.setOrigin(tankPosition.x + 16, tankPosition.y + 16);
+//            playerSprite.setOriginCenter();
+            playerSprite.setOrigin(playerSprite.getWidth()/2,playerSprite.getHeight()/2);
             playerSprite.setPosition(tankPosition.x, tankPosition.y);
-            playerSprite.setSize(32, 32);
+            playerSprite.setSize(64, 64);
+            playerSprite.rotate (tank.getRotation());
             playerSprite.draw(batch);
 
 
