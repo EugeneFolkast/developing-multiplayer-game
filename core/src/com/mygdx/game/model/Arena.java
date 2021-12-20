@@ -36,19 +36,22 @@ public class Arena {
                 .findFirst()
                 .ifPresent(
                         barricade -> {
-//                            float xx = visible.getShape().getX();
-//                            float yy = visible.getShape().getY();
-//
-//                            Polygon bShape = barricade.getShape();
-//                            Rectangle bShapeBounds = bShape.getBoundingRectangle();
-//                            float bx = bShape.getX();
-//                            float by = bShape.getY();
-//
-//                            if(xx < bx+bShapeBounds.width) xx = bx;
-//                            if(yy < by + bShapeBounds.height) yy = by;
-//                            if(xx + shapeBounds.width > bx) xx = bx;
-//                            if(yy + shapeBounds.height > by) yy = by;
-//                            shape.setPosition(yy, xx);
+                            float xx = visible.getShape().getX();
+                            float yy = visible.getShape().getY();
+                            float xw = visible.getShape().getBoundingRectangle().width;
+                            float yh = visible.getShape().getBoundingRectangle().height;
+
+                            Polygon bShape = barricade.getShape();
+                            Rectangle bShapeBounds = bShape.getBoundingRectangle();
+                            float bx = bShape.getX();
+                            float by = bShape.getY();
+
+                            if (xx+xw > bx) xx = bx - xw-1;
+                            if (xx < bx+ bShapeBounds.width) xx = bx + bShapeBounds.width+1;
+                            if (yy+yh > by) yy = by - yh-1;
+                            if (yy < by+ bShapeBounds.height) yy = by + bShapeBounds.height+1;
+
+                            shape.setPosition(xx, yy);
                         }
                 );
 
