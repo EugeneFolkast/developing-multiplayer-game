@@ -28,8 +28,8 @@ com/mygdx/game/container/BulletsContainer.java
  com.mygdx.game.container.BulletsContainer
 com/mygdx/game/container/Container.java
  com.mygdx.game.container.Container
-com/mygdx/game/dto/TankDto.java
- com.mygdx.game.dto.TankDto
+com/mygdx/game/dto/UuidDto.java
+ com.mygdx.game.dto.UuidDto
 com/mygdx/game/model/Identifiable.java
  com.mygdx.game.model.Identifiable
 com/mygdx/game/dto/Dto.java
