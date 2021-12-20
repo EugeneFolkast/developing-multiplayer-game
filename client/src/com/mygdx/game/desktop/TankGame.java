@@ -6,12 +6,14 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.container.BulletsContainer;
@@ -38,6 +40,7 @@ import static java.util.stream.Collectors.toList;
 public class TankGame extends ApplicationAdapter {
     private Texture fire;
     private Texture mapToExport;
+    private Texture bullet;
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private Rectangle playerRec;
@@ -55,6 +58,7 @@ public class TankGame extends ApplicationAdapter {
     private Client client;
     private PlayersContainer<Player> playersContainer;
     private Container<Bullet> bulletsContainer;
+    private Image playerBasedImage;
     Controls localControls;
 
     @Override
@@ -98,7 +102,11 @@ public class TankGame extends ApplicationAdapter {
         shots = new Array<Bullet>();
         battleMusic1.setLooping(true);
 
-        playerImage = new Texture(Gdx.files.internal("shot.png"));
+        bullet = new Texture(Gdx.files.internal("shot.png"));
+
+        playerImage = new Texture(Gdx.files.internal("player.png"));
+
+        playerBasedImage = new Image(playerImage);
     }
 
     public void show() {
@@ -219,11 +227,11 @@ public class TankGame extends ApplicationAdapter {
             }
             Tank tank = item.getTank().get();
             if(tank.getPlayerImage() == null)
-                localPlayer.getTank().get().setPlayerImage("player.png");
+                localPlayer.getTank().get().setPlayerImage(playerBasedImage.getName());
             Vector2 tankPosition = tank.getPosition();
             System.out.println(tankPosition);
 
-            Sprite playerSprite = new Sprite(new Texture(Gdx.files.internal(tank.getPlayerImage())));
+            Sprite playerSprite = new Sprite(playerImage);
 //            playerSprite.setOrigin(tankPosition.x + 16, tankPosition.y + 16);
 //            playerSprite.setOriginCenter();
             playerSprite.setOrigin(playerSprite.getWidth()/4,playerSprite.getHeight()/4);
@@ -235,7 +243,7 @@ public class TankGame extends ApplicationAdapter {
 
         }
         for (Bullet item: bulletsContainer.getAll()) {
-            Sprite bulletSprite = new Sprite(playerImage);
+            Sprite bulletSprite = new Sprite(bullet);
             bulletSprite.setOrigin(item.getPosition().x, item.getPosition().y);
             bulletSprite.setOriginCenter();
             bulletSprite.rotate (item.getRotation());
