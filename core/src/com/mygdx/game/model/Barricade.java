@@ -1,15 +1,25 @@
 package com.mygdx.game.model;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Vector2;
 
 import java.util.UUID;
 
-public class Barricade {
+public class Barricade implements Identifiable, Visible {
+    private static final float[] VERTICES = new float[] {
+            0, 0,
+            0, 64,
+            64, 64,
+            64, 0
+    };
     private Texture barricadeImage;
     private Integer xCoor;
     private Integer yCoor;
     private Integer typeOfDestructiveness;
     private final UUID id;
+    private final Polygon shape;
+    private static final Vector2 MIDDLE = new Vector2(32, 32);
 
     public Barricade(Texture barricadeImage, Integer xCoor, Integer yCoor, Integer typeOfDestructiveness, UUID id){
         this.barricadeImage = barricadeImage;
@@ -17,6 +27,9 @@ public class Barricade {
         this.xCoor = xCoor;
         this.yCoor = yCoor;
         this.id = id;
+        shape = new Polygon(VERTICES);
+        shape.setOrigin(MIDDLE.x, MIDDLE.y);
+        shape.setPosition(xCoor, yCoor);
     }
 
     public UUID getId() {
@@ -53,5 +66,10 @@ public class Barricade {
 
     public void setTypeOfDestructiveness(Integer typeOfDestructiveness) {
         this.typeOfDestructiveness = typeOfDestructiveness;
+    }
+
+    @Override
+    public Polygon getShape() {
+        return shape;
     }
 }

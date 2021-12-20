@@ -74,7 +74,7 @@ public class TankGame extends ApplicationAdapter {
                                 {3,0,0,0,2,0,0,0,0,3},
                                 {3,0,0,0,2,0,0,0,0,3},
                                 {3,0,1,1,2,1,1,1,0,3},
-                                {3,0,0,0,0,0,0,0,0,3},
+                                {3,0,0,0,1,0,0,0,0,3},
                                 {3,0,0,0,1,0,0,0,0,3},
                                 {3,0,1,1,2,1,1,1,0,3},
                                 {3,0,0,0,2,0,0,0,0,3},
@@ -171,6 +171,7 @@ public class TankGame extends ApplicationAdapter {
         barricades.add(barricade);
         batch.draw(barricade.getBarricadeImage(), barricade.getxCoor(), barricade.getyCoor());
     }
+
     public void displaceBarricade(Integer type, Integer xCoor, Integer yCoor){
         if(type != 0){
             if (type != 1){
@@ -181,7 +182,6 @@ public class TankGame extends ApplicationAdapter {
                 else {
                     changeBarricadeStat(2, xCoor, yCoor, "brakefromshotwall.png");
                 }
-
             }
             else{
                 changeBarricadeStat(1, xCoor, yCoor, "easytobreak.png");
@@ -219,17 +219,18 @@ public class TankGame extends ApplicationAdapter {
             if(tank.getPlayerImage() == null)
                 localPlayer.getTank().get().setPlayerImage("player.png");
             Vector2 tankPosition = tank.getPosition();
+            System.out.println(tankPosition);
 
             Sprite playerSprite = new Sprite(new Texture(Gdx.files.internal(tank.getPlayerImage())));
-            playerSprite.setOrigin(tankPosition.x, tankPosition.y);
+            playerSprite.setOrigin(tankPosition.x + 16, tankPosition.y + 16);
             playerSprite.setOriginCenter();
             playerSprite.rotate (tank.getRotation());
             playerSprite.setPosition(tankPosition.x, tankPosition.y);
+            playerSprite.setSize(32, 32);
             playerSprite.draw(batch);
 
 
         }
-        System.out.println(bulletsContainer.getAll());
         for (Bullet item: bulletsContainer.getAll()) {
             Sprite bulletSprite = new Sprite(new Texture(Gdx.files.internal("shot.png")));
             bulletSprite.setOrigin(item.getPosition().x, item.getPosition().y);

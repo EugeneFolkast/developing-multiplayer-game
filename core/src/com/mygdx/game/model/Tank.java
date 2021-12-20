@@ -16,16 +16,16 @@ import java.util.UUID;
 public class Tank implements Visible{
     private static final float[] VERTICES = new float[] {
             0, 0,
-            0, 64,
-            64, 64,
-            64, 0
+            0, 32,
+            32, 32,
+            32, 0
     };
 //    private static final float MAX_SPEED = 200f;
     private static final float ACCELERATION = 10f;
     private static final float ROTATION = 50;
     private static final float DRAG = 8f;
-    private static final Vector2 MIDDLE = new Vector2(32, 32);
-    private static final Vector2 BULLET_OUTPUT = new Vector2(0, 80);
+    private static final Vector2 MIDDLE = new Vector2(16, 16);
+    private static final Vector2 BULLET_OUTPUT = new Vector2(0, 20);
     private static final Duration SHOT_INTERVAL = Duration.ofMillis(600);
     private final Polygon shape;
     private final Vector2 velocity;
@@ -118,6 +118,7 @@ public class Tank implements Visible{
     }
 
     private void moveForwards(float delta) {
+
         Vector2 direction = getDirection();
         velocity.x += delta * ACCELERATION * direction.x;
         velocity.y += delta * ACCELERATION * direction.y;
