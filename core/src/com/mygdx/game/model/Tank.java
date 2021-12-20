@@ -2,30 +2,34 @@ package com.mygdx.game.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.container.BarricadeContainer;
 import com.mygdx.game.controls.Controls;
 import com.mygdx.game.util.Vectors;
 
+import java.awt.*;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 public class Tank implements Visible{
     private static final float[] VERTICES = new float[] {
             0, 0,
-            0, 32,
-            32, 32,
-            32, 0
+            0, 33,
+            33, 33,
+            33, 0
     };
 //    private static final float MAX_SPEED = 200f;
     private static final float ACCELERATION = 10f;
     private static final float ROTATION = 50;
     private static final float DRAG = 8f;
     private static final Vector2 MIDDLE = new Vector2(16, 16);
-    private static final Vector2 BULLET_OUTPUT = new Vector2(0, 20);
+    private static final Vector2 BULLET_OUTPUT = new Vector2(16, 32);
     private static final Duration SHOT_INTERVAL = Duration.ofMillis(600);
     private final Polygon shape;
     private final Vector2 velocity;
@@ -139,17 +143,24 @@ public class Tank implements Visible{
     }
 
     private void applyMovement(float delta) {
-//        velocity.clamp(0, MAX_SPEED);
-//
         velocity.x -= delta * DRAG * velocity.x;
         velocity.y -= delta * DRAG * velocity.y;
-//        rotation -= delta * DRAG * rotation;
-//
-//        float x = delta * velocity.x;
-//        float y = delta * velocity.y;
 
-        shape.translate(velocity.x, velocity.y);
+        Polygon tank = new Polygon(VERTICES);
+        tank.setOrigin(MIDDLE.x, MIDDLE.y);
+        tank.setPosition(shape.getX(), shape.getY());
+        tank.setRotation(rotation);
+        tank.translate(velocity.x, velocity.y);
+
+        Optional<Barricade> res = BarricadeContainer.getBarricades().stream().filter(barricade ->
+                Intersector.overlapConvexPolygons(barricade.getShape(), tank)
+        ).findFirst();
+
+        if(res.equals(Optional.empty())) {
+            shape.translate(velocity.x, velocity.y);
+        }
         shape.setRotation(rotation);
+
     }
 
     private void applyShootingPossibility() {

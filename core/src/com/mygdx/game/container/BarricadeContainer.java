@@ -7,14 +7,20 @@ import java.util.List;
 import java.util.UUID;
 
 public class BarricadeContainer implements Container<Barricade> {
-    private final List<Barricade> barricade;
+    private static List<Barricade> barricade = null;
+
 
     public BarricadeContainer(List<Barricade> barricade) {
-        this.barricade = barricade;
+        BarricadeContainer.barricade = barricade;
     }
+
 
     public BarricadeContainer() {
         this(new ArrayList<>());
+    }
+
+    public static List<Barricade> getBarricades(){
+        return barricade;
     }
 
     @Override

@@ -235,7 +235,6 @@ public class TankGame extends ApplicationAdapter {
             if(tank.getPlayerImage() == null)
                 localPlayer.getTank().get().setPlayerImage(enemy.getName());
             Vector2 tankPosition = tank.getPosition();
-            System.out.println(tankPosition);
 
             Sprite playerSprite = new Sprite(playerImage);
             playerSprite.setOrigin(playerSprite.getWidth()/4,playerSprite.getHeight()/4);
@@ -249,11 +248,12 @@ public class TankGame extends ApplicationAdapter {
         for (Bullet item: bulletsContainer.getAll()) {
             Sprite bulletSprite = new Sprite(bullet);
             bulletSprite.setOrigin(item.getPosition().x/8, item.getPosition().y/8);
-            bulletSprite.setOriginCenter();
+//            bulletSprite.setOriginCenter();
             bulletSprite.setSize(8, 8);
             bulletSprite.rotate (item.getRotation());
             bulletSprite.setPosition(item.getPosition().x, item.getPosition().y);
             bulletSprite.draw(batch);
+            System.out.println(item.getPosition());
 
         }
 
