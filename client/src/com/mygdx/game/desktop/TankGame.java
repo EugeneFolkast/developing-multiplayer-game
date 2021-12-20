@@ -59,6 +59,8 @@ public class TankGame extends ApplicationAdapter {
     private PlayersContainer<Player> playersContainer;
     private Container<Bullet> bulletsContainer;
     private Image playerBasedImage;
+    private Image enemy;
+    private Texture playerEnemy;
     Controls localControls;
 
     @Override
@@ -107,6 +109,10 @@ public class TankGame extends ApplicationAdapter {
         playerImage = new Texture(Gdx.files.internal("player.png"));
 
         playerBasedImage = new Image(playerImage);
+
+        playerEnemy = new Texture(Gdx.files.internal("enemy.png"));
+
+        enemy = new Image(playerEnemy);
     }
 
     public void show() {
@@ -227,7 +233,7 @@ public class TankGame extends ApplicationAdapter {
             }
             Tank tank = item.getTank().get();
             if(tank.getPlayerImage() == null)
-                localPlayer.getTank().get().setPlayerImage(playerBasedImage.getName());
+                localPlayer.getTank().get().setPlayerImage(enemy.getName());
             Vector2 tankPosition = tank.getPosition();
             System.out.println(tankPosition);
 
@@ -244,8 +250,9 @@ public class TankGame extends ApplicationAdapter {
         }
         for (Bullet item: bulletsContainer.getAll()) {
             Sprite bulletSprite = new Sprite(bullet);
-            bulletSprite.setOrigin(item.getPosition().x, item.getPosition().y);
+            bulletSprite.setOrigin(item.getPosition().x/8, item.getPosition().y/8);
             bulletSprite.setOriginCenter();
+            bulletSprite.setSize(8, 8);
             bulletSprite.rotate (item.getRotation());
             bulletSprite.setPosition(item.getPosition().x, item.getPosition().y);
             bulletSprite.draw(batch);
