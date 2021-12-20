@@ -42,8 +42,8 @@ public class Respawner<PlayerType extends Player> {
         do{
             x = random.nextInt(arena.getMapArray().length);
             y = random.nextInt(arena.getMapArray()[0].length);
-        }while(arena.getMapArray()[x][y] == 0);
+        }while(arena.getMapArray()[y][x] != 0);
 
-        return new Vector2(x,y);
+        return new Vector2(x*64,y*64);
     }
 }
