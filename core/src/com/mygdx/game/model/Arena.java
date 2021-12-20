@@ -46,23 +46,23 @@ public class Arena {
                             float bx = bShape.getX();
                             float by = bShape.getY();
 
-                            if (xx+xw > bx) xx = bx - xw-1;
-                            if (xx < bx+ bShapeBounds.width) xx = bx + bShapeBounds.width+1;
-                            if (yy+yh > by) yy = by - yh-1;
-                            if (yy < by+ bShapeBounds.height) yy = by + bShapeBounds.height+1;
+                            if (xx+xw > bx) xx -= xx+xw - bx;
+                            if (xx < bx+ bShapeBounds.width) xx += bx+ bShapeBounds.width - xx;
+                            if (yy+yh > by) yy -= yy+yh - by;
+                            if (yy < by+ bShapeBounds.height) yy += by+ bShapeBounds.height - yy;
 
-                            shape.setPosition(xx, yy);
+                            shape.setPosition((int)xx, (int)yy);
                         }
                 );
 
-        float x = shape.getX();
-        float y = shape.getY();
-
-        if(x + shapeBounds.width < bounds.x) x = bounds.width;
-        if(y + shapeBounds.height < bounds.y) y = bounds.height;
-        if(x > bounds.width) x = bounds.x - shapeBounds.width;
-        if(y > bounds.height) y = bounds.y - shapeBounds.height;
-        shape.setPosition(x, y);
+//        float x = shape.getX();
+//        float y = shape.getY();
+//
+//        if(x + shapeBounds.width < bounds.x) x = bounds.width;
+//        if(y + shapeBounds.height < bounds.y) y = bounds.height;
+//        if(x > bounds.width) x = bounds.x - shapeBounds.width;
+//        if(y > bounds.height) y = bounds.y - shapeBounds.height;
+//        shape.setPosition(x, y);
 
 
 
