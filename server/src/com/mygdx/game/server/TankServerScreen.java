@@ -86,13 +86,13 @@ public class TankServerScreen extends ScreenAdapter {
 
         playersContainer.update(delta);
         playersContainer.streamTank()
-                .forEach(player -> arena.ensurePlacementWithinBounds(player, barricadeContainer));
+                .forEach(arena::ensurePlacementWithinBounds);
         playersContainer.obtainAndStreamBullets()
                 .forEach(bulletsContainer::add);
 
         bulletsContainer.update(delta);
         bulletsContainer.stream()
-                .forEach(bullet -> arena.ensurePlacementWithinBounds(bullet, barricadeContainer));
+                .forEach(arena::ensurePlacementWithinBounds);
 
         server.broadcast(GameStateMapper.fromState(playersContainer, bulletsContainer, arena.getMapArray()));
     }

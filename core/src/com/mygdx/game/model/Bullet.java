@@ -13,9 +13,9 @@ import java.util.UUID;
 public class Bullet implements Visible, Identifiable{
     private static final float[] VERTICES = new float[] {
             0, 0,
-            32, 0,
-            32, 32,
-            0, 32
+            8, 0,
+            8, 8,
+            0, 8
     };
     private static final float SPEED = 300f;
     private static final float RANGE = 300f;
