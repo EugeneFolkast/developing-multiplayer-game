@@ -238,8 +238,6 @@ public class TankGame extends ApplicationAdapter {
             System.out.println(tankPosition);
 
             Sprite playerSprite = new Sprite(playerImage);
-//            playerSprite.setOrigin(tankPosition.x + 16, tankPosition.y + 16);
-//            playerSprite.setOriginCenter();
             playerSprite.setOrigin(playerSprite.getWidth()/4,playerSprite.getHeight()/4);
             playerSprite.setSize(32, 32);
             playerSprite.setPosition(tankPosition.x, tankPosition.y);
@@ -269,5 +267,8 @@ public class TankGame extends ApplicationAdapter {
         battleMusic1.dispose();
         shotSound.dispose();
         batch.dispose();
+        playerEnemy.dispose();
+        playerImage.dispose();
+        bullet.dispose();
     }
 }
