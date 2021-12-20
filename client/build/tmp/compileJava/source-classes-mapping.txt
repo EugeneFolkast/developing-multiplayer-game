@@ -1,2 +1,11 @@
+com/mygdx/game/desktop/connection/SocketIoClient.java
+ com.mygdx.game.desktop.connection.SocketIoClient
+ com.mygdx.game.desktop.connection.SocketIoClient$ConnectionState
+com/mygdx/game/desktop/connection/Client.java
+ com.mygdx.game.desktop.connection.Client
+com/mygdx/game/desktop/DesktopLauncher.java
+ com.mygdx.game.desktop.DesktopLauncher
 com/mygdx/game/desktop/controls/KeyboardControls.java
  com.mygdx.game.desktop.controls.KeyboardControls
+com/mygdx/game/desktop/TankGame.java
+ com.mygdx.game.desktop.TankGame

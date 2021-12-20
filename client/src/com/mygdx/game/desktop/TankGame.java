@@ -49,17 +49,12 @@ public class TankGame extends ApplicationAdapter {
     private Player localPlayer;
     private Texture playerImage;
     private Texture barricadeImage;
-    private Texture bulletImage;
     private Barricade barricade;
     private Array<Barricade> barricades;
     private Array<Bullet> shots;
     private Client client;
     private PlayersContainer<Player> playersContainer;
     private Container<Bullet> bulletsContainer;
-    private Sprite barricadeSprite;
-    private Sprite playerSprite;
-    private Sprite bulletSprite;
-
     Controls localControls;
 
     @Override
@@ -174,10 +169,7 @@ public class TankGame extends ApplicationAdapter {
         barricade.setxCoor(xCoor);
         barricade.setyCoor(yCoor);
         barricades.add(barricade);
-//        batch.draw(barricade.getBarricadeImage(), barricade.getxCoor(), barricade.getyCoor());
-        barricadeSprite = new Sprite(barricadeImage, barricade.getxCoor(), barricade.getyCoor(), 64, 64);
-        barricadeSprite.setPosition(barricade.getxCoor(), barricade.getyCoor());
-        barricadeSprite.draw(batch);
+        batch.draw(barricade.getBarricadeImage(), barricade.getxCoor(), barricade.getyCoor());
     }
 
     public void displaceBarricade(Integer type, Integer xCoor, Integer yCoor){
@@ -237,12 +229,7 @@ public class TankGame extends ApplicationAdapter {
             playerSprite.setSize(32, 32);
             playerSprite.draw(batch);
 
-            playerSprite.setPosition(tank.getxCoordinate()*64, tank.getyCoordinate()* 64);
 
-            playerSprite.draw(batch);
-
-//            batch.draw(new Texture(Gdx.files.internal(tank.getPlayerImage())),
-//                    tank.getxCoordinate()* 64, tank.getyCoordinate()* 64);
         }
         for (Bullet item: bulletsContainer.getAll()) {
             Sprite bulletSprite = new Sprite(new Texture(Gdx.files.internal("shot.png")));
@@ -251,20 +238,6 @@ public class TankGame extends ApplicationAdapter {
             bulletSprite.rotate (item.getRotation());
             bulletSprite.setPosition(item.getPosition().x, item.getPosition().y);
             bulletSprite.draw(batch);
-
-            bulletImage = new Texture(Gdx.files.internal("shot.png"));
-
-            bulletSprite = new Sprite(bulletImage,
-                    (int)item.getxCoordinate()* 64,
-                    (int)item.getyCoordinate()* 64,
-                    64,
-                    64);
-
-            bulletSprite.setPosition(item.getxCoordinate()* 64, item.getyCoordinate()* 64);
-
-            bulletSprite.draw(batch);
-//            batch.draw(new Texture(Gdx.files.internal("shot.png")),
-//                    item.getxCoordinate()* 64, item.getyCoordinate()* 64);
 
         }
 
