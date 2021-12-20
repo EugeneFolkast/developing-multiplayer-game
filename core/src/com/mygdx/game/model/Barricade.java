@@ -68,6 +68,11 @@ public class Barricade implements Identifiable, Visible {
         this.typeOfDestructiveness = typeOfDestructiveness;
     }
 
+    public void hitting(){
+        if (typeOfDestructiveness != 3)
+            typeOfDestructiveness--;
+    }
+
     @Override
     public Polygon getShape() {
         return shape;

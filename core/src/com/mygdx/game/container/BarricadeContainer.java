@@ -39,5 +39,6 @@ public class BarricadeContainer implements Container<Barricade> {
 
     @Override
     public void update(float delta) {
+        barricade.removeIf(barricade1 -> barricade1.getTypeOfDestructiveness() == 0);
     }
 }

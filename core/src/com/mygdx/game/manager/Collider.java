@@ -19,13 +19,22 @@ public class Collider<PlayerType extends Player> {
 
     public void checkBulletCollisions() {
         bulletsContainer.stream()
-                .forEach(bullet -> playersContainer.stream()
-                        .filter(player -> player.getTank().isPresent())
-                        .filter(player -> player.getTank().get().collidesWith(bullet))
-                        .findFirst()
-                        .ifPresent(player -> {
-                            player.noticeHit();
-                            bullet.noticeHit();
-                        }));
+                .forEach(bullet -> {
+                    playersContainer.stream()
+                            .filter(player -> player.getTank().isPresent())
+                            .filter(player -> player.getTank().get().collidesWith(bullet))
+                            .findFirst()
+                            .ifPresent(player -> {
+                                player.noticeHit();
+                                bullet.noticeHit();
+                            });
+                    barricadeContainer.stream()
+                            .filter(barricade -> barricade.collidesWith(bullet))
+                            .findFirst()
+                            .ifPresent(barricade -> {
+                                bullet.noticeHit();
+                                barricade.hitting();
+                            });
+                });
     }
 }
