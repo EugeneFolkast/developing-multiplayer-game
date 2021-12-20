@@ -48,8 +48,8 @@ com/mygdx/game/model/Barricade.java
  com.mygdx.game.model.Barricade
 com/mygdx/game/container/BarricadeContainer.java
  com.mygdx.game.container.BarricadeContainer
-com/mygdx/game/manager/Respawner.java
- com.mygdx.game.manager.Respawner
+com/mygdx/game/container/PlayersContainer.java
+ com.mygdx.game.container.PlayersContainer
 com/mygdx/game/model/RemotePlayer.java
  com.mygdx.game.model.RemotePlayer
 com/mygdx/game/model/Player.java
@@ -64,7 +64,7 @@ com/mygdx/game/dto/mapper/PlayerMapper.java
  com.mygdx.game.dto.mapper.PlayerMapper
 com/mygdx/game/model/Tank.java
  com.mygdx.game.model.Tank
-com/mygdx/game/container/PlayersContainer.java
- com.mygdx.game.container.PlayersContainer
+com/mygdx/game/manager/Respawner.java
+ com.mygdx.game.manager.Respawner
 com/mygdx/game/model/Arena.java
  com.mygdx.game.model.Arena

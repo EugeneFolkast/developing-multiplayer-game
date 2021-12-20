@@ -34,7 +34,7 @@ public class TankServerGame extends Game {
         BulletsContainer bulletsContainer = new BulletsContainer();
         PlayersContainer<RemotePlayer> playersContainer = new PlayersContainer<>();
         BarricadeContainer barricadeContainer = new BarricadeContainer();
-        Respawner respawner = new Respawner<>(playersContainer, 640, 640);
+        Respawner respawner = new Respawner<>(playersContainer, 640, 640, arena);
         Collider collider = new Collider<>(playersContainer, bulletsContainer, barricadeContainer);
 
         Map<String, String> env = System.getenv();
