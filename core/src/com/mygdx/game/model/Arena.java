@@ -27,6 +27,10 @@ public class Arena {
         return mapArray;
     }
 
+    public void setMapArray(int[][] mapArray) {
+        this.mapArray = mapArray;
+    }
+
     public void ensurePlacementWithinBounds(Visible visible) {
         Polygon shape = visible.getShape();
         Rectangle shapeBounds = shape.getBoundingRectangle();

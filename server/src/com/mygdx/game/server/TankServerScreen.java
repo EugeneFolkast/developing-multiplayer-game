@@ -1,6 +1,7 @@
 package com.mygdx.game.server;
 
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.container.BarricadeContainer;
 import com.mygdx.game.container.BulletsContainer;
 import com.mygdx.game.container.PlayersContainer;
@@ -95,8 +96,21 @@ public class TankServerScreen extends ScreenAdapter {
                 .forEach(arena::ensurePlacementWithinBounds);
 
         barricadeContainer.update(delta);
+        mapUpdate();
 
         server.broadcast(GameStateMapper.fromState(playersContainer, bulletsContainer, arena.getMapArray()));
+    }
+
+    private void mapUpdate(){
+        int[][] mapArray = new int[arena.getMapArray().length][arena.getMapArray()[0].length];
+
+        barricadeContainer.getAll().forEach(barricade ->
+        {
+            Vector2 pos = barricade.getPosition();
+            mapArray[(int) (pos.y/64)][(int) (pos.x/64)] = barricade.getTypeOfDestructiveness();
+        });
+
+        arena.setMapArray(mapArray);
     }
 }
 
