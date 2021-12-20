@@ -97,6 +97,8 @@ public class TankGame extends ApplicationAdapter {
         barricades = new Array<Barricade>();
         shots = new Array<Bullet>();
         battleMusic1.setLooping(true);
+
+        playerImage = new Texture(Gdx.files.internal("shot.png"));
     }
 
     public void show() {
@@ -224,16 +226,16 @@ public class TankGame extends ApplicationAdapter {
             Sprite playerSprite = new Sprite(new Texture(Gdx.files.internal(tank.getPlayerImage())));
 //            playerSprite.setOrigin(tankPosition.x + 16, tankPosition.y + 16);
 //            playerSprite.setOriginCenter();
-            playerSprite.setOrigin(playerSprite.getWidth()/2,playerSprite.getHeight()/2);
+            playerSprite.setOrigin(playerSprite.getWidth()/4,playerSprite.getHeight()/4);
+            playerSprite.setSize(32, 32);
             playerSprite.setPosition(tankPosition.x, tankPosition.y);
-            playerSprite.setSize(64, 64);
             playerSprite.rotate (tank.getRotation());
             playerSprite.draw(batch);
 
 
         }
         for (Bullet item: bulletsContainer.getAll()) {
-            Sprite bulletSprite = new Sprite(new Texture(Gdx.files.internal("shot.png")));
+            Sprite bulletSprite = new Sprite(playerImage);
             bulletSprite.setOrigin(item.getPosition().x, item.getPosition().y);
             bulletSprite.setOriginCenter();
             bulletSprite.rotate (item.getRotation());
