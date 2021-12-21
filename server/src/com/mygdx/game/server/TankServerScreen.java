@@ -61,7 +61,7 @@ public class TankServerScreen extends ScreenAdapter {
         }
 
         for (int i =0; i<2; i++) {
-            Bot bot = new Bot(UUID.randomUUID());
+            Bot bot = new Bot(UUID.randomUUID(), playersContainer);
             botContainer.add(bot);
             respawnerBot.respawnFor(bot);
         }
@@ -98,6 +98,10 @@ public class TankServerScreen extends ScreenAdapter {
         respawnerPlayer.respawn();
         respawnerBot.respawn();
         collider.checkBulletCollisions();
+
+        botContainer.update(delta);
+        botContainer.obtainAndStreamBullets()
+                .forEach(bulletsContainer::add);
 
         playersContainer.update(delta);
         playersContainer.streamTank()

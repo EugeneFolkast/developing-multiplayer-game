@@ -231,6 +231,12 @@ public class TankGame extends ApplicationAdapter {
             if(item.getTank().equals(Optional.empty())) {
                 continue;
             }
+            if (Objects.equals(item.getTank(), Optional.empty())) {
+                continue;
+            }
+            if (Objects.equals(localPlayer.getTank(), Optional.empty())) {
+                continue;
+            }
             Tank tank = item.getTank().get();
             if(tank.getPlayerImage() == null)
                 localPlayer.getTank().get().setPlayerImage(enemy.getName());

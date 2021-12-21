@@ -4,12 +4,18 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 
+import java.awt.*;
+
 public interface Visible {
     float xCoordinate = 0;
     float yCoordinate = 0;
 
     default boolean collidesWith(Visible anotherVisible) {
         return Intersector.overlapConvexPolygons(getShape(), anotherVisible.getShape());
+    }
+
+    default boolean collidesWith(Polygon anotherShape) {
+        return Intersector.overlapConvexPolygons(getShape(), anotherShape);
     }
 
     default Vector2 getPosition() {

@@ -66,7 +66,7 @@ public class Tank implements Visible{
         if(controls.left()) moveBack(delta);
         if(controls.right()) rotateLeft(delta);
         if(controls.back()) rotateRight(delta);
-        wantsToShoot = controls.shoot();
+        this.wantsToShoot = controls.shoot();
     }
 
     public void update(float delta) {
@@ -88,7 +88,7 @@ public class Tank implements Visible{
 
 
     public Optional<Bullet> obtainBullet() {
-        if(canShoot && wantsToShoot) {
+        if(canShoot && this.wantsToShoot) {
             lastShot = Instant.now();
              Vector2 bulletPos = bulletStartingPosition();
             return Optional.of(new Bullet(
