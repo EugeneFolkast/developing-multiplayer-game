@@ -30,6 +30,7 @@ public class Collider<PlayerType extends Player> {
                                 player.noticeHit();
                                 bullet.noticeHit();
                             });
+
                     botsContainer.stream()
                             .filter(player -> player.getTank().isPresent())
                             .filter(player -> player.getTank().get().collidesWith(bullet))
@@ -38,6 +39,7 @@ public class Collider<PlayerType extends Player> {
                                 player.noticeHit();
                                 bullet.noticeHit();
                             });
+
                     barricadeContainer.stream()
                             .filter(barricade -> barricade.collidesWith(bullet))
                             .findFirst()

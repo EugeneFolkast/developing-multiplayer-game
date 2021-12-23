@@ -252,6 +252,10 @@ public class TankGame extends ApplicationAdapter {
                 localPlayer.getTank().get().setPlayerImage(enemy.getName());
             Vector2 tankPosition = tank.getPosition();
 
+            System.out.println();
+            System.out.println();
+            System.out.println(tank.getRotation());
+
             Sprite playerSprite = new Sprite(playerImage);
             playerSprite.setOrigin(playerSprite.getWidth()/4,playerSprite.getHeight()/4);
             playerSprite.setSize(32, 32);
