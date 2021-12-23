@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -29,10 +30,7 @@ import com.mygdx.game.dto.mapper.ControlsMapper;
 import com.mygdx.game.dto.mapper.PlayerMapper;
 import com.mygdx.game.model.*;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -60,6 +58,18 @@ public class TankGame extends ApplicationAdapter {
     private Image playerBasedImage;
     private Image enemy;
     private Texture playerEnemy;
+    private static final float[] VERTICES = new float[] {
+            0, 0,
+            2, 0,
+            2, 2,
+            0, 2
+    };
+    private static final float SPEED = 500f;
+    private static final float RANGE = 400f;
+    private float remainingRange;
+    private boolean hasHitSomething;
+    private Polygon shape;
+
     Controls localControls;
 
     @Override
@@ -236,6 +246,7 @@ public class TankGame extends ApplicationAdapter {
             if (Objects.equals(localPlayer.getTank(), Optional.empty())) {
                 continue;
             }
+
             Tank tank = item.getTank().get();
             if(tank.getPlayerImage() == null)
                 localPlayer.getTank().get().setPlayerImage(enemy.getName());
@@ -244,7 +255,7 @@ public class TankGame extends ApplicationAdapter {
             Sprite playerSprite = new Sprite(playerImage);
             playerSprite.setOrigin(playerSprite.getWidth()/4,playerSprite.getHeight()/4);
             playerSprite.setSize(32, 32);
-            playerSprite.setPosition(tankPosition.x, tankPosition.y);
+            playerSprite.setPosition(tankPosition.x-64, tankPosition.y-64);
             playerSprite.rotate (tank.getRotation());
             playerSprite.draw(batch);
         }
@@ -252,9 +263,9 @@ public class TankGame extends ApplicationAdapter {
         for (Bullet item: bulletsContainer.getAll()) {
             Sprite bulletSprite = new Sprite(bullet);
             bulletSprite.setOrigin(item.getPosition().x/8, item.getPosition().y/8);
-            bulletSprite.rotate (item.getRotation());
+//            bulletSprite.rotate (item.getRotation());
             bulletSprite.setSize(16, 16);
-            bulletSprite.setPosition(item.getPosition().x, item.getPosition().y);
+            bulletSprite.setPosition(item.getPosition().x-72, item.getPosition().y-84);
             bulletSprite.draw(batch);
         }
 
