@@ -2,15 +2,12 @@ package com.mygdx.game.desktop;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -27,13 +24,15 @@ import com.mygdx.game.desktop.controls.KeyboardControls;
 import com.mygdx.game.dto.BulletDto;
 import com.mygdx.game.dto.GameStateDto;
 import com.mygdx.game.dto.PlayerDto;
-import com.mygdx.game.dto.TankDto;
 import com.mygdx.game.dto.mapper.BulletMapper;
 import com.mygdx.game.dto.mapper.ControlsMapper;
 import com.mygdx.game.dto.mapper.PlayerMapper;
 import com.mygdx.game.model.*;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 import static java.util.stream.Collectors.toList;
 
@@ -248,19 +247,15 @@ public class TankGame extends ApplicationAdapter {
             playerSprite.setPosition(tankPosition.x, tankPosition.y);
             playerSprite.rotate (tank.getRotation());
             playerSprite.draw(batch);
-
-
         }
+
         for (Bullet item: bulletsContainer.getAll()) {
             Sprite bulletSprite = new Sprite(bullet);
             bulletSprite.setOrigin(item.getPosition().x/8, item.getPosition().y/8);
-//            bulletSprite.setOriginCenter();
-            bulletSprite.setSize(8, 8);
             bulletSprite.rotate (item.getRotation());
+            bulletSprite.setSize(16, 16);
             bulletSprite.setPosition(item.getPosition().x, item.getPosition().y);
             bulletSprite.draw(batch);
-            System.out.println(item.getPosition());
-
         }
 
 
