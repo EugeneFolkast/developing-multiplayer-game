@@ -165,6 +165,7 @@ public class Tank implements Visible{
         if(res.equals(Optional.empty())) {
             shape.translate(velocity.x, velocity.y);
         }
+
         shape.setRotation(rotation);
 
     }

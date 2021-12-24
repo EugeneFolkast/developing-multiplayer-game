@@ -60,8 +60,8 @@ public class TankServerScreen extends ScreenAdapter {
             }
         }
 
-        for (int i =0; i<2; i++) {
-            Bot bot = new Bot(UUID.randomUUID(), playersContainer);
+        for (int i =0; i<1; i++) {
+            Bot bot = new Bot(UUID.randomUUID(), playersContainer, arena);
             botContainer.add(bot);
             respawnerBot.respawnFor(bot);
         }

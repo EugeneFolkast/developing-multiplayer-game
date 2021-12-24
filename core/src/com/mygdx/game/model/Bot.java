@@ -3,22 +3,30 @@ package com.mygdx.game.model;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.container.Container;
-import com.mygdx.game.controls.Controls;
 import com.mygdx.game.controls.RemoteControls;
 import com.mygdx.game.util.Vectors;
+import com.mygdx.game.util.maze.Position;
+import com.mygdx.game.util.maze.SearchMaze;
 
-import java.awt.*;
-import java.lang.reflect.Array;
+import java.text.MessageFormat;
 import java.util.*;
+
+import static com.badlogic.gdx.math.MathUtils.random;
 
 public class Bot extends Player{
     private final RemoteControls controls;
-    private static final float RANGE = 300f;
+    private static final float RANGE = 100f;
     private float remainingRange;
     private final Container<RemotePlayer> playersContainer;
     private final Polygon shapeSee;
     private final ArrayList<Polygon> leftSee;
     private final ArrayList<Polygon> rightSee;
+    private final Arena map;
+    private int goToX =0;
+    private int goToY =0;
+    private Stack<Position> path;
+    private int goToIndex = 0;
+
 
     private static final float[] VERTICES = new float[] {
             0, 0,
@@ -27,15 +35,18 @@ public class Bot extends Player{
             0, 8
     };
 
-    public Bot(UUID id, Container<RemotePlayer> playersContainer) {
+    public Bot(UUID id, Container<RemotePlayer> playersContainer, Arena map) {
         super(id, null);
         this.playersContainer = playersContainer;
+        this.map = map;
         this.controls = new RemoteControls();
         this.remainingRange = RANGE;
 
         this.shapeSee = new Polygon(VERTICES);
         this.leftSee = new ArrayList<>();
         this.rightSee = new ArrayList<>();
+
+        path = new Stack<>();
 
         for( int i=0; i<9; i+= 1){
             Polygon vectorLeft = new Polygon(VERTICES);
@@ -44,6 +55,14 @@ public class Bot extends Player{
             this.leftSee.add(vectorLeft);
             this. rightSee.add(vectorRight);
         }
+
+    }
+
+    private void updateGoTo(){
+        do{
+            goToX = random.nextInt(map.getMapArray().length)*64;
+            goToY = random.nextInt(map.getMapArray()[0].length)*64;
+        }while(map.getMapArray()[goToY/64][goToX/64] != 0);
 
     }
 
@@ -58,6 +77,21 @@ public class Bot extends Player{
         this.shapeSee.setRotation(shape.getRotation());
         shape.setOrigin(0, -Tank.getMiddle().y);
 
+        if ((Math.round(shape.getX()) - goToX < 64 && Math.round(shape.getY()) - goToY < 64)
+                || path.empty() || path.size() == goToIndex) {
+            updateGoTo();
+            goToIndex = 0;
+            SearchMaze maze = new SearchMaze(map.getMapArray(), Math.round(shape.getX()/64), Math.round(shape.getY()/64),
+                    goToX/64, goToY/64);
+
+            this.path = maze.startSearch(Math.round(shape.getX()/64), Math.round(shape.getY()/64));
+            Position res = path.get(goToIndex);
+
+            goToX = res.getPx()*64;
+            goToY = res.getPy()*64;
+        }
+
+
         for(int i=0; i<9; i+= 1){
             this.leftSee.get(i).setPosition(shape.getX(), shape.getY());
             this.rightSee.get(i).setPosition(shape.getX(), shape.getY());
@@ -70,6 +104,7 @@ public class Bot extends Player{
             this.controls.setBack(false);
             this.controls.setRight(false);
             this.controls.setShoot(false);
+            this.controls.setForward(false);
 
 
             this.remainingRange -= (1);
@@ -84,10 +119,121 @@ public class Bot extends Player{
             }
             if (shoot(delta)){
                 this.controls.setShoot(true);
+                return;
             }
 
+            move(Math.round(shape.getX()), Math.round(shape.getY()), Math.round(shape.getRotation()));
+
         }
+
         this.remainingRange = RANGE;
+    }
+
+    private void move(int thisX, int thisY, float rotation) {
+        System.out.println(MessageFormat.format("thisX {0} thisY {1} \ngoToX {2}, goToY {3} \nrotation {4}",
+                thisX, thisY, goToX, goToY, rotation));
+
+        if (thisX - goToX < 64 && thisY - goToY < 64){
+            goToIndex++;
+            if (path.size() <= goToIndex)
+                return;
+
+            Position res = path.get(goToIndex);
+
+            goToX = res.getPx();
+            goToY = res.getPy();
+            return;
+        }
+
+        if (thisX > goToX) {
+            if (rotation > 90) {
+                this.controls.setBack(true);
+                return;
+            }
+            if (rotation < 90 && rotation > 0) {
+                this.controls.setRight(true);
+                return;
+            }
+
+            if (rotation < -270) {
+                this.controls.setBack(true);
+                return;
+            }
+            if (rotation > -270 && rotation <= 0) {
+                this.controls.setRight(true);
+                return;
+            }
+
+            this.controls.setForward(true);
+
+        }
+        if (thisX < goToX) {
+            if (rotation > 270) {
+                this.controls.setRight(true);
+                return;
+            }
+            if (rotation < 270 && rotation > 0) {
+                this.controls.setBack(true);
+                return;
+            }
+
+            if (rotation < -90) {
+                this.controls.setRight(true);
+                return;
+            }
+            if (rotation > -90 && rotation <= 0) {
+                this.controls.setBack(true);
+                return;
+            }
+
+            this.controls.setForward(true);
+
+        }
+        if (thisY < goToY) {
+            if (rotation > 0 && rotation < 180) {
+                this.controls.setRight(true);
+                return;
+            }
+            if (rotation > 180) {
+                this.controls.setBack(true);
+                return;
+            }
+
+            if (rotation < -180) {
+                this.controls.setRight(true);
+                return;
+            }
+            if (rotation > -180 && rotation <= 0) {
+                this.controls.setBack(true);
+                return;
+            }
+
+            this.controls.setForward(true);
+
+        }
+        if (thisY > goToY) {
+            if (rotation > 180) {
+                this.controls.setRight(true);
+                return;
+            }
+            if (rotation < 180 && rotation > 0) {
+                this.controls.setBack(true);
+                return;
+            }
+
+            if (rotation < -180) {
+                this.controls.setBack(true);
+                return;
+            }
+            if (rotation > -180 && rotation <= 0) {
+                this.controls.setRight(true);
+                return;
+            }
+
+            this.controls.setForward(true);
+
+        }
+        this.controls.setForward(true);
     }
 
     private boolean shoot(float delta){
