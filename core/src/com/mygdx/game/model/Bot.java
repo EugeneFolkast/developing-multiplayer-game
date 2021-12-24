@@ -15,7 +15,7 @@ import static com.badlogic.gdx.math.MathUtils.random;
 
 public class Bot extends Player{
     private final RemoteControls controls;
-    private static final float RANGE = 200f;
+    private static final float RANGE = 300f;
     private float remainingRange;
     private final Container<RemotePlayer> playersContainer;
     private final Polygon shapeSee;

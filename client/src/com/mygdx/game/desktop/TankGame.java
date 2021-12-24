@@ -254,12 +254,13 @@ public class TankGame extends ApplicationAdapter {
 
             System.out.println();
             System.out.println();
-            System.out.println(tank.getRotation());
+            System.out.println(tank.getShape().getX());
+            System.out.println(tank.getShape().getY());
 
             Sprite playerSprite = new Sprite(playerImage);
             playerSprite.setOrigin(playerSprite.getWidth()/4,playerSprite.getHeight()/4);
             playerSprite.setSize(32, 32);
-            playerSprite.setPosition(tankPosition.x-64, tankPosition.y-64);
+            playerSprite.setPosition(tankPosition.x, tankPosition.y);
             playerSprite.rotate (tank.getRotation());
             playerSprite.draw(batch);
         }
