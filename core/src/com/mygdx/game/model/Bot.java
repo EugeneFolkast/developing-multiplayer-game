@@ -15,7 +15,7 @@ import static com.badlogic.gdx.math.MathUtils.random;
 
 public class Bot extends Player{
     private final RemoteControls controls;
-    private static final float RANGE = 300f;
+    private static final float RANGE = 200f;
     private float remainingRange;
     private final Container<RemotePlayer> playersContainer;
     private final Polygon shapeSee;
@@ -56,6 +56,10 @@ public class Bot extends Player{
             this. rightSee.add(vectorRight);
         }
 
+    }
+
+    public void clearPath() {
+        this.path.clear();
     }
 
     private void updateGoTo(){
@@ -113,7 +117,6 @@ public class Bot extends Player{
             this.controls.setRight(false);
             this.controls.setShoot(false);
             this.controls.setForward(false);
-
 
             this.remainingRange -= (1);
 
@@ -210,7 +213,7 @@ public class Bot extends Player{
                 this.controls.setRight(true);
                 return;
             }
-            if (rotation > -180 && rotation <= 0) {
+            if (rotation > -180 && rotation < 0) {
                 this.controls.setBack(true);
                 return;
             }
@@ -232,7 +235,7 @@ public class Bot extends Player{
                 this.controls.setBack(true);
                 return;
             }
-            if (rotation > -180 && rotation <= 0) {
+            if (rotation > -180 && rotation < 0) {
                 this.controls.setRight(true);
                 return;
             }

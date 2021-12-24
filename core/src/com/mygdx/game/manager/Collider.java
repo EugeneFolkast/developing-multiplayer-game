@@ -8,10 +8,10 @@ import java.util.UUID;
 public class Collider<PlayerType extends Player> {
     private final Container<Barricade> barricadeContainer;
     private final Container<PlayerType> playersContainer;
-    private final Container<PlayerType> botsContainer;
+    private final Container<Bot> botsContainer;
     private final Container<Bullet> bulletsContainer;
 
-    public Collider(Container<PlayerType> playersContainer, Container<PlayerType> botsContainer,
+    public Collider(Container<PlayerType> playersContainer, Container<Bot> botsContainer,
                     Container<Bullet> bulletsContainer, Container<Barricade> barricadeContainer) {
         this.playersContainer = playersContainer;
         this.botsContainer = botsContainer;
@@ -38,6 +38,7 @@ public class Collider<PlayerType extends Player> {
                             .ifPresent(player -> {
                                 player.noticeHit();
                                 bullet.noticeHit();
+                                player.clearPath();
                             });
 
                     barricadeContainer.stream()

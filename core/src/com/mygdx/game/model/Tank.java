@@ -29,7 +29,7 @@ public class Tank implements Visible{
     private static final float ROTATION = 50;
     private static final float DRAG = 8f;
     private static final Vector2 MIDDLE = new Vector2(17, 17);
-    private static final Vector2 BULLET_OUTPUT = new Vector2(17, 35);
+    private static final Vector2 BULLET_OUTPUT = new Vector2(17, 36);
     private static final Duration SHOT_INTERVAL = Duration.ofMillis(600);
     private final Polygon shape;
     private final Vector2 velocity;
