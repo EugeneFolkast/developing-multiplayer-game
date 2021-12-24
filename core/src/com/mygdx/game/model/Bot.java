@@ -15,7 +15,7 @@ import static com.badlogic.gdx.math.MathUtils.random;
 
 public class Bot extends Player{
     private final RemoteControls controls;
-    private static final float RANGE = 100f;
+    private static final float RANGE = 300f;
     private float remainingRange;
     private final Container<RemotePlayer> playersContainer;
     private final Polygon shapeSee;
@@ -62,7 +62,7 @@ public class Bot extends Player{
         do{
             goToX = random.nextInt(map.getMapArray().length)*64;
             goToY = random.nextInt(map.getMapArray()[0].length)*64;
-        }while(map.getMapArray()[goToY/64][goToX/64] != 0);
+        }while(map.getMapArray()[(int)(goToY/64)][(int)(goToX/64)] != 0);
 
     }
 
@@ -77,18 +77,26 @@ public class Bot extends Player{
         this.shapeSee.setRotation(shape.getRotation());
         shape.setOrigin(0, -Tank.getMiddle().y);
 
-        if ((Math.round(shape.getX()) - goToX < 64 && Math.round(shape.getY()) - goToY < 64)
+        if ((Math.round(shape.getX()) - goToX < 64 && Math.round(shape.getY()) - goToY < 64
+                &&
+                Math.round(shape.getX()) - goToX >=0  && Math.round(shape.getY()) - goToY >=0 )
                 || path.empty() || path.size() == goToIndex) {
             updateGoTo();
             goToIndex = 0;
             SearchMaze maze = new SearchMaze(map.getMapArray(), Math.round(shape.getX()/64), Math.round(shape.getY()/64),
                     goToX/64, goToY/64);
+            try {
+                this.path = maze.startSearch(Math.round(shape.getX()/64), Math.round(shape.getY()/64));
+                Position res = path.get(goToIndex);
 
-            this.path = maze.startSearch(Math.round(shape.getX()/64), Math.round(shape.getY()/64));
-            Position res = path.get(goToIndex);
+                goToX = res.getPx()*64;
+                goToY = res.getPy()*64;
+            }catch (EmptyStackException ex)
+            {
+                path.clear();
+                return;
+            }
 
-            goToX = res.getPx()*64;
-            goToY = res.getPy()*64;
         }
 
 
@@ -121,10 +129,8 @@ public class Bot extends Player{
                 this.controls.setShoot(true);
                 return;
             }
-
-            move(Math.round(shape.getX()), Math.round(shape.getY()), Math.round(shape.getRotation()));
-
         }
+        move(Math.round(shape.getX()), Math.round(shape.getY()), Math.round(shape.getRotation()));
 
         this.remainingRange = RANGE;
     }
@@ -133,15 +139,16 @@ public class Bot extends Player{
         System.out.println(MessageFormat.format("thisX {0} thisY {1} \ngoToX {2}, goToY {3} \nrotation {4}",
                 thisX, thisY, goToX, goToY, rotation));
 
-        if (thisX - goToX < 64 && thisY - goToY < 64){
+        if (thisX - goToX < 64 && thisY - goToY < 64
+            && thisX - goToX > 0 && thisY - goToY > 0){
             goToIndex++;
             if (path.size() <= goToIndex)
                 return;
 
             Position res = path.get(goToIndex);
 
-            goToX = res.getPx();
-            goToY = res.getPy();
+            goToX = res.getPx()*64;
+            goToY = res.getPy()*64;
             return;
         }
 

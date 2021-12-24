@@ -33,7 +33,7 @@ public class SearchMaze {
 
     public boolean moveTop() {// Двигаться вверх
         String s = currentPosition.getPx() + "" + (currentPosition.getPy() - 1);
-        if ((map[currentPosition.getPx()][currentPosition.getPy() - 1] != 1) & !isArrived(s)) {
+        if ((map[currentPosition.getPx()][currentPosition.getPy() - 1] == 0) & !isArrived(s)) {
             footPrint.add(s);
             return true;
         }
@@ -42,7 +42,7 @@ public class SearchMaze {
 
     public boolean moveRight() {// Сдвиг вправо
         String s = (currentPosition.getPx() + 1) + "" + currentPosition.getPy();
-        if (map[currentPosition.getPx() + 1][currentPosition.getPy()] != 1 & !isArrived(s)) {
+        if (map[currentPosition.getPx() + 1][currentPosition.getPy()] ==0 & !isArrived(s)) {
             footPrint.add(s);
             return true;
         }
@@ -51,7 +51,7 @@ public class SearchMaze {
 
     public boolean moveBottom() {// Двигаться вниз
         String s = currentPosition.getPx() + "" + (currentPosition.getPy() + 1);
-        if ((map[currentPosition.getPx()][currentPosition.getPy() + 1] != 1) & !isArrived(s)) {
+        if ((map[currentPosition.getPx()][currentPosition.getPy() + 1] ==0) & !isArrived(s)) {
             footPrint.add(s);
             return true;
         }
@@ -60,7 +60,7 @@ public class SearchMaze {
 
     public boolean moveLeft() {// Сдвиг влево
         String s = (currentPosition.getPx() - 1) + "" + currentPosition.getPy();
-        if ((map[currentPosition.getPx() - 1][currentPosition.getPy()] != 1) & !isArrived(s)) {
+        if ((map[currentPosition.getPx() - 1][currentPosition.getPy()] ==0) & !isArrived(s)) {
             footPrint.add(s);
             return true;
         }
@@ -97,7 +97,7 @@ public class SearchMaze {
         footPrint = new ArrayList<>();
         footPrint.add(String.valueOf(startPos) + String.valueOf(endPos));
         stacks.push(start);
-        while (currentPosition.getPx() != startPos || currentPosition.getPy() != endPos) {
+        while (currentPosition.getPx() != end.getPx() || currentPosition.getPy() != end.getPy()) {
             move();
         }
 
